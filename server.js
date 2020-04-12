@@ -19,7 +19,7 @@ mongoose.connect(process.env.DB, { useNewUrlParser: true, useCreateIndex: true, 
     .catch(err => console.log(err))
 
 //app.post("/auth/public_token", receivePublicToken);
-app.use('/auth/public_token', plaid)
+app.use('/plaid/', plaid)
 
 app.get("/transactions", getTransactions);
 

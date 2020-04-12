@@ -19,7 +19,7 @@ function Link() {
     }, [])
 
     const handleOnSuccess = (public_token, metadata) => {
-        axios.post('/auth/public_token', {
+        axios.post('/plaid/link', {
             public_token: public_token
         })
     }

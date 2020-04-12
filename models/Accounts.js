@@ -7,7 +7,7 @@ const AccountSchema = new Schema({
         required: true
     },
     itemId: {
-        type: Schema.Types.ObjectId,
+        type: String,
         required: true
     },
     accountId: {
