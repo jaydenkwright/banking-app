@@ -22,22 +22,20 @@ router.post('/link', (req, res) => {
             client.getItem(ACCESS_TOKEN, (err, result) => {
                 const { available_products,billed_products,institution_id,webhook } = result.item
                 Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'institutionId': institution_id}, (err, items) => {
-                    if(items){
-                        console.log('in system')
-                    }else{
+                    if(!items){
                         client.getInstitutionById(institution_id, (err, result) => {
-                            const institution = result.institution
+                            const { name } = result.institution
                             const newItem = new Items({
                                 userId: "5e62dcfeadbd5109fecf0ddb",
                                 accessToken: ACCESS_TOKEN,
                                 itemId: ITEM_ID,
                                 availableProducts: available_products,
                                 billedProducts: billed_products,
-                                institutionName: institution.name,
+                                institutionName: name,
                                 institutionId: institution_id,
                                 webhook: webhook
                             })
-                            newItem.save(function(err){
+                            newItem.save((err) => {
                                  if(err){
                                      console.log(err);
                                      return;
@@ -46,15 +44,22 @@ router.post('/link', (req, res) => {
                             });
                         }) 
                         console.log('added')
+                    }else{
+                        console.log('in system')
+                        Items.updateOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'institutionId': institution_id}, 
+                            {$set: {
+                                accessToken: ACCESS_TOKEN
+                            }}, (err, result) => {
+                                console.log('updated')
+                            })  
                     }
                 })
             })
             client.getAccounts(ACCESS_TOKEN, (err, result) => {
                 const accounts = result.accounts
-                console.log(accounts)
                 accounts.map(
                     account => 
-                        Accounts.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'accountId': account.account_id}, (err, acc) => {
+                        Accounts.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'mask': account.mask, 'name': account.name, 'subtype': account.subtype}, (err, acc) => {
                             const { account_id,mask,balances,name,official_name,subtype,type } = account
                             if(!acc){
                                   new Accounts({
@@ -67,7 +72,7 @@ router.post('/link', (req, res) => {
                                       officialName: official_name,
                                       subtype: subtype,
                                       type: type
-                                  }).save(function(err){
+                                  }).save((err) => {
                                       if(err){
                                           console.log(err);
                                           return;
@@ -79,7 +84,6 @@ router.post('/link', (req, res) => {
                             }   
                         })       
                     )
-                console.log(accounts)
             })
       });
 })
