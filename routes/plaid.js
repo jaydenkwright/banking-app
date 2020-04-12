@@ -24,23 +24,29 @@ router.post('/', (req, res) => {
         console.log(ACCESS_TOKEN);
             client.getItem(ACCESS_TOKEN, (err, result) => {
                 const item = result.item
-                const newItem = new Items({
-                    userId: "5e62dcfeadbd5109fecf0ddb",
-                    accessToken: ACCESS_TOKEN,
-                    itemId: item.item_id,
-                    availableProducts: item.available_products,
-                    billedProducts: item.billed_products,
-                    institutionId: item.institution_id,
-                    webhook: item.webhook
-                })
-                newItem.save(function(err){
-                    if(err){
-                         console.log(err);
-                         return;
+                Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'institutionId': item.institution_id}, (err, items) => {
+                    if(items){
+                        console.log('in system')
+                    }else{
+                         const newItem = new Items({
+                             userId: "5e62dcfeadbd5109fecf0ddb",
+                             accessToken: ACCESS_TOKEN,
+                             itemId: item.item_id,
+                             availableProducts: item.available_products,
+                             billedProducts: item.billed_products,
+                             institutionId: item.institution_id,
+                             webhook: item.webhook
+                         })
+                         newItem.save(function(err){
+                             if(err){
+                                 console.log(err);
+                                 return;
+                             }
+                         console.log(newItem)
+                         }); 
+                        console.log('not in system')
                     }
-                console.log(newItem)
-              });
-
+                })
             })
       });
 })
