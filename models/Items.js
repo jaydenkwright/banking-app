@@ -12,6 +12,7 @@ const ItemSchema = new mongoose.Schema({
     itemId: String,
     availableProducts: Array,
     billedProducts: Array,
+    institutionName: String,
     institutionId: String,
     webhook: String
 })

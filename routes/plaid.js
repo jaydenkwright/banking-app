@@ -20,27 +20,32 @@ router.post('/link', (req, res) => {
         const ITEM_ID = tokenResponse.item_id;
         console.log(ACCESS_TOKEN);
             client.getItem(ACCESS_TOKEN, (err, result) => {
-                const item = result.item
-                Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'institutionId': item.institution_id}, (err, items) => {
+                const { available_products,billed_products,institution_id,webhook } = result.item
+                Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'institutionId': institution_id}, (err, items) => {
                     if(items){
                         console.log('in system')
                     }else{
-                         const newItem = new Items({
-                            userId: "5e62dcfeadbd5109fecf0ddb",
-                            accessToken: ACCESS_TOKEN,
-                            itemId: ITEM_ID,
-                            availableProducts: item.available_products,
-                            billedProducts: item.billed_products,
-                            institutionId: item.institution_id,
-                            webhook: item.webhook
-                         })
-                         newItem.save(function(err){
-                             if(err){
-                                 console.log(err);
-                                 return;
-                             }
-                         console.log(newItem)
-                         }); 
+                        client.getInstitutionById(institution_id, (err, result) => {
+                            const institution = result.institution
+                            const newItem = new Items({
+                                userId: "5e62dcfeadbd5109fecf0ddb",
+                                accessToken: ACCESS_TOKEN,
+                                itemId: ITEM_ID,
+                                availableProducts: available_products,
+                                billedProducts: billed_products,
+                                institutionName: institution.name,
+                                institutionId: institution_id,
+                                webhook: webhook
+                            })
+                            newItem.save(function(err){
+                                 if(err){
+                                     console.log(err);
+                                     return;
+                                 }
+                                console.log(newItem)
+                            });
+                        }) 
+                        console.log('added')
                     }
                 })
             })
@@ -50,23 +55,24 @@ router.post('/link', (req, res) => {
                 accounts.map(
                     account => 
                         Accounts.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'accountId': account.account_id}, (err, acc) => {
+                            const { account_id,mask,balances,name,official_name,subtype,type } = account
                             if(!acc){
-                                // new Accounts({
-                                //     userId: '5e62dcfeadbd5109fecf0ddb',
-                                //     itemId: ITEM_ID,
-                                //     accountId: account.account_id,
-                                //     mask: account.mask,
-                                //     balances: account.balances,
-                                //     name: account.name,
-                                //     officialName: account.official_name,
-                                //     subtype: account.subtype,
-                                //     type: account.type
-                                // }).save(function(err){
-                                //     if(err){
-                                //         console.log(err);
-                                //         return;
-                                //     }
-                                // }); 
+                                  new Accounts({
+                                      userId: '5e62dcfeadbd5109fecf0ddb',
+                                      itemId: ITEM_ID,
+                                      accountId: account_id,
+                                      mask: mask,
+                                      balances: balances,
+                                      name: name,
+                                      officialName: official_name,
+                                      subtype: subtype,
+                                      type: type
+                                  }).save(function(err){
+                                      if(err){
+                                          console.log(err);
+                                          return;
+                                      }
+                                  }); 
                                 console.log('added')
                             }else{
                                 console.log('already in system')
