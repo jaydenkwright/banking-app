@@ -27,7 +27,7 @@ const client = new plaid.Client(
         access_token: ACCESS_TOKEN,
         item_id: ITEM_ID
       });
-      console.log(ACCESS_TOKEN);
+      console.log(tokenResponse);
     });
   };
   
