@@ -88,6 +88,33 @@ router.post('/link', (req, res) => {
       });
 })
 
+router.get('/transactions', (req, res) => {
+    //res.json({message: 'working'})
+    Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'lVlr1K3GQAHDWMWvAN6mSvDxbWQvaMiZXApbN'}, (err, items) => {
+        const { accessToken, itemId } = items
+        const startDate = moment()
+            .subtract(30, "days")
+            .format("YYYY-MM-DD");
+        const endDate = moment().format("YYYY-MM-DD");
+        client.getTransactions(
+            accessToken,
+            startDate,
+            endDate,
+            {
+                count: 250,
+                offset: 0
+            },
+            (error, transactionResponse) => {
+                res.json(transactionResponse);
+                    const {transactions} = transactionResponse 
+                    transactions.map(transaction => 
+                        console.log(transaction.account_id)    
+                    )
+            }
+        );
+    })
+})
+
 module.exports = router;
 
 
