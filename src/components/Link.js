@@ -12,7 +12,8 @@ function Link() {
             if(res.data){
                 setTransactions(res.data.transactions)
                 setLoaded(true)
-                console.log(res.data)
+                // console.log(res.data)
+                // res.data.map(trans => console.log(trans.name))
             }
             //console.log(transactions)
         })

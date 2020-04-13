@@ -97,7 +97,7 @@ router.get('/transactions', (req, res) => {
             .format("YYYY-MM-DD");
         const endDate = moment().format("YYYY-MM-DD");
         client.getTransactions(
-            'access-sandbox-fed2f034-cd3a-4cc7-acc9-25acf327a93c',
+            accessToken,
             startDate,
             endDate,
             {
@@ -141,9 +141,6 @@ router.get('/transactions', (req, res) => {
                                                         return;
                                                     }
                                                 }); 
-                                                console.log('not in system')
-                                            }else{
-                                                console.log('in system')
                                             }
                                         }
                                     )
@@ -151,6 +148,10 @@ router.get('/transactions', (req, res) => {
                             }else{
                                 // Retreive transactions database
                                 console.log('all transactions in database')
+                                Transactions.find({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': itemId}, (err, transaction) => {
+                                    console.log({transactions: transaction})
+                                   res.json({ transactions: transaction})
+                                })
                             }
                     })
                 }else{
