@@ -14,7 +14,11 @@ const ItemSchema = new mongoose.Schema({
     billedProducts: Array,
     institutionName: String,
     institutionId: String,
-    webhook: String
+    webhook: String,
+    date: {
+        type: Date,
+        default: Date.now()
+    }
 })
 
 module.exports = mongoose.model('Items', ItemSchema)

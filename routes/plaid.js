@@ -4,6 +4,7 @@ const plaid = require('plaid')
 const moment = require('moment')
 const Items = require('../models/Items')
 const Accounts = require('../models/Accounts')
+const Transactions = require('../models/Transactions')
 
 const client = new plaid.Client(
     process.env.PLAID_CLIENT_ID,
@@ -89,27 +90,72 @@ router.post('/link', (req, res) => {
 })
 
 router.get('/transactions', (req, res) => {
-    //res.json({message: 'working'})
-    Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'lVlr1K3GQAHDWMWvAN6mSvDxbWQvaMiZXApbN'}, (err, items) => {
+    Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'epnnZE9xbKcXZVkLALLvU4vdpPEQp3tLNnn4z'}, (err, items) => {
         const { accessToken, itemId } = items
         const startDate = moment()
-            .subtract(30, "days")
+            .subtract(60, "days")
             .format("YYYY-MM-DD");
         const endDate = moment().format("YYYY-MM-DD");
         client.getTransactions(
-            accessToken,
+            'access-sandbox-fed2f034-cd3a-4cc7-acc9-25acf327a93c',
             startDate,
             endDate,
             {
-                count: 250,
+                count: 100,
                 offset: 0
             },
             (error, transactionResponse) => {
-                res.json(transactionResponse);
-                    const {transactions} = transactionResponse 
-                    transactions.map(transaction => 
-                        console.log(transaction.account_id)    
-                    )
+                if(!error){
+                    const {transactions, total_transactions} = transactionResponse 
+                    Transactions.countDocuments({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': itemId}, (err, total) => {
+                            console.log(total_transactions)
+                            if(total !== total_transactions){
+                                // Not all transactions are in the database, therefore it will be sent from Plaid API
+                                res.json(transactionResponse)
+                                transactions.map(transaction => 
+                                    Transactions.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'transactionId': transaction.transaction_id},
+                                        (err, trans) => {
+                                            const {account_id, account_owner, amount, authorized_date, category, category_id, date, iso_currency_code, location, name, payment_channel, pending, transaction_id, transaction_type} = transaction
+                                            if(!trans){
+                                                //console.log(transaction)
+                                                 new Transactions({
+                                                    userId: '5e62dcfeadbd5109fecf0ddb',
+                                                    itemId: itemId,
+                                                    accountId: account_id,
+                                                    accountOwner: account_owner,
+                                                    amount: amount,
+                                                    authorizedDate: authorized_date,
+                                                    category: category,
+                                                    categoryId: category_id,
+                                                    date: date,
+                                                    isoCurrencyCode: iso_currency_code,
+                                                    location: location,
+                                                    name: name,
+                                                    paymentChannel: payment_channel,
+                                                    pending: pending,
+                                                    transactionId: transaction_id,
+                                                    transactionType: transaction_type,
+                                                }).save((err) => {
+                                                    if(err){
+                                                        console.log(err);
+                                                        return;
+                                                    }
+                                                }); 
+                                                console.log('not in system')
+                                            }else{
+                                                console.log('in system')
+                                            }
+                                        }
+                                    )
+                                )
+                            }else{
+                                // Retreive transactions database
+                                console.log('all transactions in database')
+                            }
+                    })
+                }else{
+                    console.log(error)
+                }
             }
         );
     })

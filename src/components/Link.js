@@ -10,8 +10,8 @@ function Link() {
     useEffect(() => {
         axios.get('/plaid/transactions').then(res => {
             if(res.data){
-                //setTransactions(res.data.accounts[1])
-                //setLoaded(true)
+                setTransactions(res.data.transactions)
+                setLoaded(true)
                 console.log(res.data)
             }
             //console.log(transactions)
@@ -53,10 +53,13 @@ function Link() {
             <div>
                 <button onClick={handleClick}>Get Transactions</button>
             </div>
-            {transactions.name}
-            {transactions.official_name}
-            {transactions.subtype}
-            {loaded ? transactions.balances.available : null}
+            {
+                transactions.map(transaction => 
+                    <div>
+                        <h1>{transaction.name}</h1>
+                    </div>
+                )
+            }
         </div>
     )
 }
