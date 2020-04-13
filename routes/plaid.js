@@ -95,7 +95,8 @@ router.get('/transactions', (req, res) => {
         const startDate = moment()
             .subtract(60, "days")
             .format("YYYY-MM-DD");
-        const endDate = moment().format("YYYY-MM-DD");
+        const endDate = moment()
+            .format("YYYY-MM-DD");
         client.getTransactions(
             accessToken,
             startDate,
@@ -149,6 +150,83 @@ router.get('/transactions', (req, res) => {
                                 // Retreive transactions database
                                 console.log('all transactions in database')
                                 Transactions.find({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': itemId}, (err, transaction) => {
+                                    console.log({transactions: transaction})
+                                   res.json({ transactions: transaction})
+                                })
+                            }
+                    })
+                }else{
+                    console.log(error)
+                }
+            }
+        );
+    })
+})
+
+router.get('/transactions/:accountId', (req, res) => {
+    const { accountId } = req.params
+    console.log(accountId)
+    Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'epnnZE9xbKcXZVkLALLvU4vdpPEQp3tLNnn4z'}, (err, items) => {
+        const { accessToken, itemId } = items
+        const startDate = moment()
+            .subtract(60, "days")
+            .format("YYYY-MM-DD");
+        const endDate = moment()
+            .format("YYYY-MM-DD");
+        client.getTransactions(
+            accessToken,
+            startDate,
+            endDate,
+            {
+                account_ids: [accountId],
+                count: 100,
+                offset: 0
+            },
+            (error, transactionResponse) => {
+                if(!error){
+                    const {transactions, total_transactions} = transactionResponse 
+                    Transactions.countDocuments({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': itemId, 'accountId': accountId}, (err, total) => {
+                            console.log(total_transactions)
+                            if(total !== total_transactions){
+                                // Not all transactions are in the database, therefore it will be sent from Plaid API
+                                res.json(transactionResponse)
+                                transactions.map(transaction => 
+                                    Transactions.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'transactionId': transaction.transaction_id},
+                                        (err, trans) => {
+                                            const {account_id, account_owner, amount, authorized_date, category, category_id, date, iso_currency_code, location, name, payment_channel, pending, transaction_id, transaction_type} = transaction
+                                            if(!trans){
+                                                //console.log(transaction)
+                                                 new Transactions({
+                                                    userId: '5e62dcfeadbd5109fecf0ddb',
+                                                    itemId: itemId,
+                                                    accountId: account_id,
+                                                    accountOwner: account_owner,
+                                                    amount: amount,
+                                                    authorizedDate: authorized_date,
+                                                    category: category,
+                                                    categoryId: category_id,
+                                                    date: date,
+                                                    isoCurrencyCode: iso_currency_code,
+                                                    location: location,
+                                                    name: name,
+                                                    paymentChannel: payment_channel,
+                                                    pending: pending,
+                                                    transactionId: transaction_id,
+                                                    transactionType: transaction_type,
+                                                }).save((err) => {
+                                                    if(err){
+                                                        console.log(err);
+                                                        return;
+                                                    }
+                                                }); 
+                                            }
+                                        }
+                                    )
+                                )
+                            }else{
+                                // Retreive transactions database
+                                console.log('all transactions in database')
+                                Transactions.find({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': itemId, 'accountId': accountId}, (err, transaction) => {
                                     console.log({transactions: transaction})
                                    res.json({ transactions: transaction})
                                 })

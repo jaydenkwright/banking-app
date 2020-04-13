@@ -8,7 +8,7 @@ function Link() {
     const [loaded, setLoaded] = useState(undefined)
 
     useEffect(() => {
-        axios.get('/plaid/transactions').then(res => {
+        axios.get('/plaid/transactions/wPZZrE4XgLuzJvA8b88EhZmKgzgL36trzPLrV').then(res => {
             if(res.data){
                 setTransactions(res.data.transactions)
                 setLoaded(true)
@@ -58,6 +58,8 @@ function Link() {
                 transactions.map(transaction => 
                     <div>
                         <h1>{transaction.name}</h1>
+                        <div>{transaction.amount}</div>
+                        <div>{transaction.category[0]}</div>
                     </div>
                 )
             }
