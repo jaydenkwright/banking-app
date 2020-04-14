@@ -41,7 +41,7 @@ function Link() {
 
     return (
         <div>
-            <PlaidLink
+            {/* <PlaidLink
                 clientName="React Plaid Setup"
                 env="sandbox"
                 product={["auth", "transactions"]}
@@ -51,18 +51,41 @@ function Link() {
                 className="test"
             >
                 Open Link and connect your bank!
-            </PlaidLink>
-            <div className={styles.box}>
-                <div className={styles.title}>
+            </PlaidLink> */}
+            <div className={styles.account}>
+                <div className={styles.accountTitle}>
+                    Plaid Checking
+                </div>
+                <div className={styles.accountSubtitle}>
+                    Plaid Gold Standard 0% Interest Checking 
+                </div>
+                <div className={styles.balanceAvailable}>
+                    $100
+                </div>
+                <div className={styles.balanceAvailableText}>
+                    Available
+                </div>
+                <div className={styles.balanceCurrent}>
+                    $110
+                </div>
+                <div className={styles.balanceCurrentText}>
+                    Current
+                </div>
+            </div>
+            <div className={styles.transactionTitle}>
+                Transactions
+            </div>
+            <div className={styles.transaction}>
+                <div className={styles.transactionTitle}>
                     United Airlines
                 </div>
-                <div className={styles.price}>$450</div>
+                <div className={styles.transactionPrice}>$450</div>
             </div>
             {
                 transactions.map(transaction => 
-                    <div className={styles.box}>
-                        <div className={styles.title}>{transaction.name}</div>
-                        <div className={styles.price}>${transaction.amount}</div>
+                    <div className={styles.transaction}>
+                        <div className={styles.transactionTitle}>{transaction.name}</div>
+                        <div className={styles.transactionPrice}>${transaction.amount}</div>
                     </div>
                 )
             }
