@@ -8,7 +8,7 @@ function Link() {
     const [loaded, setLoaded] = useState(undefined)
 
     useEffect(() => {
-        axios.get('/plaid/items/epnnZE9xbKcXZVkLALLvU4vdpPEQp3tLNnn4z').then(res => {
+        axios.get('/plaid/account/wPZZrE4XgLuzJvA8b88EhZmKgzgL36trzPLrV').then(res => {
             if(res.data){
                 //setTransactions(res.data.transactions)
                 //setLoaded(true)
