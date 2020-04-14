@@ -14,7 +14,9 @@ const client = new plaid.Client(
     { version: "2019-05-29", clientApp: "Plaid Quickstart" }
 );
 
-// Link user with Plaid item/accounts
+// @route   POST /plaid/link
+// @desc    Exchange public token with with Plaid API to retrieve ACCESS_TOKEN
+// @access  private
 router.post('/link', (req, res) => {
     let PUBLIC_TOKEN = req.body.public_token // get Public token from PlaidLink on the client side
     client.exchangePublicToken(PUBLIC_TOKEN, (error, tokenResponse) => {
@@ -91,7 +93,9 @@ router.post('/link', (req, res) => {
 })
 
 
-// Get all transactions from a specific item
+// @route   GET /plaid/transactions/
+// @desc    Retrieve transactions from specific item
+// @access  private
 router.get('/transactions', (req, res) => {
     Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'epnnZE9xbKcXZVkLALLvU4vdpPEQp3tLNnn4z'}, (err, items) => {
         const { accessToken, itemId } = items
@@ -165,7 +169,9 @@ router.get('/transactions', (req, res) => {
 })
 
 
-// Get all transactions from a specific account
+// @route   GET /plaid/transactions/:accountId
+// @desc    Retrieve transactions from specific account
+// @access  private
 router.get('/transactions/:accountId', (req, res) => {
     const { accountId } = req.params
     Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'epnnZE9xbKcXZVkLALLvU4vdpPEQp3tLNnn4z'}, (err, items) => {
