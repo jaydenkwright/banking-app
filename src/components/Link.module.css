@@ -1,0 +1,35 @@
+.box{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+    border-Radius: 10px;
+    width: 80%;
+    height: 13vh;
+    background-Color: #E0E5EC;
+    box-Shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px    rgba(255,255,255, 0.5);
+    animation: fadeIn 1s ease;
+}
+
+.title{
+    color: #364148;
+    font-size: 1.7em;
+    padding: .5em 0 0 1em;
+    font-weight: 500;
+    text-align: left;
+}
+
+.price{
+    text-align: left;
+    font-size: 1.2em;
+    padding: .2em 0 0 1.5em;
+    color: #50bf85;
+    font-weight: 500;
+}
+
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }100%{
+        opacity: 1;
+    }
+}

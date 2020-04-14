@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { PlaidLink } from 'react-plaid-link';
+import styles from './Link.module.css'
 import axios from 'axios'
 
 function Link() {
@@ -8,10 +9,10 @@ function Link() {
     const [loaded, setLoaded] = useState(undefined)
 
     useEffect(() => {
-        axios.get('/plaid/account/wPZZrE4XgLuzJvA8b88EhZmKgzgL36trzPLrV').then(res => {
+        axios.get('/plaid/transactions/').then(res => {
             if(res.data){
-                //setTransactions(res.data.transactions)
-                //setLoaded(true)
+                setTransactions(res.data.transactions)
+                setLoaded(true)
                 console.log(res.data)
                 // res.data.map(trans => console.log(trans.name))
             }
@@ -51,15 +52,17 @@ function Link() {
             >
                 Open Link and connect your bank!
             </PlaidLink>
-            <div>
-                <button onClick={handleClick}>Get Transactions</button>
+            <div className={styles.box}>
+                <div className={styles.title}>
+                    United Airlines
+                </div>
+                <div className={styles.price}>$450</div>
             </div>
             {
                 transactions.map(transaction => 
-                    <div>
-                        <h1>{transaction.name}</h1>
-                        <div>{transaction.amount}</div>
-                        <div>{transaction.category[0]}</div>
+                    <div className={styles.box}>
+                        <div className={styles.title}>{transaction.name}</div>
+                        <div className={styles.price}>${transaction.amount}</div>
                     </div>
                 )
             }
