@@ -14,6 +14,7 @@ const client = new plaid.Client(
     { version: "2019-05-29", clientApp: "Plaid Quickstart" }
 );
 
+// Link user with Plaid item/accounts
 router.post('/link', (req, res) => {
     let PUBLIC_TOKEN = req.body.public_token // get Public token from PlaidLink on the client side
     client.exchangePublicToken(PUBLIC_TOKEN, (error, tokenResponse) => {
@@ -89,6 +90,8 @@ router.post('/link', (req, res) => {
       });
 })
 
+
+// Get all transactions from a specific item
 router.get('/transactions', (req, res) => {
     Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'epnnZE9xbKcXZVkLALLvU4vdpPEQp3tLNnn4z'}, (err, items) => {
         const { accessToken, itemId } = items
@@ -109,7 +112,6 @@ router.get('/transactions', (req, res) => {
                 if(!error){
                     const {transactions, total_transactions} = transactionResponse 
                     Transactions.countDocuments({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': itemId}, (err, total) => {
-                            console.log(total_transactions)
                             if(total !== total_transactions){
                                 // Not all transactions are in the database, therefore it will be sent from Plaid API
                                 res.json(transactionResponse)
@@ -150,8 +152,7 @@ router.get('/transactions', (req, res) => {
                                 // Retreive transactions database
                                 console.log('all transactions in database')
                                 Transactions.find({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': itemId}, (err, transaction) => {
-                                    console.log({transactions: transaction})
-                                   res.json({ transactions: transaction})
+                                   res.json({ transactions: transaction })
                                 })
                             }
                     })
@@ -163,9 +164,10 @@ router.get('/transactions', (req, res) => {
     })
 })
 
+
+// Get all transactions from a specific account
 router.get('/transactions/:accountId', (req, res) => {
     const { accountId } = req.params
-    console.log(accountId)
     Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'epnnZE9xbKcXZVkLALLvU4vdpPEQp3tLNnn4z'}, (err, items) => {
         const { accessToken, itemId } = items
         const startDate = moment()
@@ -178,7 +180,7 @@ router.get('/transactions/:accountId', (req, res) => {
             startDate,
             endDate,
             {
-                account_ids: [accountId],
+                account_ids: [accountId], 
                 count: 100,
                 offset: 0
             },
@@ -186,7 +188,6 @@ router.get('/transactions/:accountId', (req, res) => {
                 if(!error){
                     const {transactions, total_transactions} = transactionResponse 
                     Transactions.countDocuments({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': itemId, 'accountId': accountId}, (err, total) => {
-                            console.log(total_transactions)
                             if(total !== total_transactions){
                                 // Not all transactions are in the database, therefore it will be sent from Plaid API
                                 res.json(transactionResponse)
@@ -195,7 +196,6 @@ router.get('/transactions/:accountId', (req, res) => {
                                         (err, trans) => {
                                             const {account_id, account_owner, amount, authorized_date, category, category_id, date, iso_currency_code, location, name, payment_channel, pending, transaction_id, transaction_type} = transaction
                                             if(!trans){
-                                                //console.log(transaction)
                                                  new Transactions({
                                                     userId: '5e62dcfeadbd5109fecf0ddb',
                                                     itemId: itemId,
@@ -224,10 +224,8 @@ router.get('/transactions/:accountId', (req, res) => {
                                     )
                                 )
                             }else{
-                                // Retreive transactions database
-                                console.log('all transactions in database')
+                                // Retreive transactions database from a certain account
                                 Transactions.find({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': itemId, 'accountId': accountId}, (err, transaction) => {
-                                    console.log({transactions: transaction})
                                    res.json({ transactions: transaction})
                                 })
                             }
@@ -239,6 +237,22 @@ router.get('/transactions/:accountId', (req, res) => {
         );
     })
 })
+
+// @route   GET plaid/transactions/:id
+// @desc    Get individual transaction from transaction ID
+// @access  private
+router.get('/transaction/:id', async (req, res) => {
+    const { id } = req.params
+    console.log(id)
+    try{
+        const transaction = await Transactions.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'transactionId': id})
+            .then(transaction => res.json({ transactions: transaction }))
+    }catch(err){
+        console.log(err)
+    }
+
+})
+
 
 module.exports = router;
 

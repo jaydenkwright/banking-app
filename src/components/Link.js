@@ -8,11 +8,11 @@ function Link() {
     const [loaded, setLoaded] = useState(undefined)
 
     useEffect(() => {
-        axios.get('/plaid/transactions/wPZZrE4XgLuzJvA8b88EhZmKgzgL36trzPLrV').then(res => {
+        axios.get('/plaid/transaction/zeLL3KjwnghAeQqGgGGphAzQBmAozjCovR6Aw').then(res => {
             if(res.data){
-                setTransactions(res.data.transactions)
-                setLoaded(true)
-                // console.log(res.data)
+                //setTransactions(res.data.transactions)
+                //setLoaded(true)
+                console.log(res.data)
                 // res.data.map(trans => console.log(trans.name))
             }
             //console.log(transactions)
