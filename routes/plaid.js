@@ -259,6 +259,19 @@ router.get('/transaction/:id', async (req, res) => {
 
 })
 
+// @route   GET /plaid/items/:id
+// @desc    Retrieve information on specific item
+// @access  private
+router.get('/items/:id', async (req, res) => {
+    const { id } = req.params
+    try{
+    const item = await Items.findOne({ 'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': id})
+        .then(item => res.json({ items: item}))
+    }catch(err){
+        console.log(err)
+    }
+})
+
 
 module.exports = router;
 
