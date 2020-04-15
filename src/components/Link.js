@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { PlaidLink } from 'react-plaid-link';
 import styles from './Link.module.css'
 import axios from 'axios'
+import moment from 'moment'
 
 function Link() {
 
@@ -39,6 +40,14 @@ function Link() {
         })
     }
 
+    const displayNumber = (number) => {
+        if(number > 0){
+            return `$${number}`
+        }else{
+            return `-$${Math.abs(number)}`
+        }
+    }
+
     return (
         <div>
             {/* <PlaidLink
@@ -52,6 +61,10 @@ function Link() {
             >
                 Open Link and connect your bank!
             </PlaidLink> */}
+            <div className={styles.welcome}>
+                Welcome,
+                <div>Andy</div>
+            </div>
             <div className={styles.account}>
                 <div className={styles.accountTitle}>
                     Plaid Checking
@@ -72,20 +85,46 @@ function Link() {
                     Current
                 </div>
             </div>
-            <div className={styles.transactionTitle}>
+            <div className={styles.titles}>
                 Transactions
             </div>
             <div className={styles.transaction}>
-                <div className={styles.transactionTitle}>
-                    United Airlines
+                <div className={styles.row}>
+                    <div className={styles.transactionTitle}>
+                        United Airlines
+                    </div>
+                    <div className={styles.transactionPrice}>
+                        $450
+                    </div>
                 </div>
-                <div className={styles.transactionPrice}>$450</div>
+                <div className={styles.row2}>
+                    <div className={styles.category}>
+                        Travel
+                    </div>
+                    <div className={styles.date}>
+                        2hr Ago
+                    </div>
+                </div>
             </div>
             {
                 transactions.map(transaction => 
                     <div className={styles.transaction}>
-                        <div className={styles.transactionTitle}>{transaction.name}</div>
-                        <div className={styles.transactionPrice}>${transaction.amount}</div>
+                        <div className={styles.row}>
+                            <div className={styles.transactionTitle}>
+                                {transaction.name}
+                            </div>
+                            <div className={transaction.amount > 0 ? styles.transactionPrice : styles.transactionPriceRed}>
+                                {displayNumber(transaction.amount)}
+                            </div>
+                        </div>   
+                        <div className={styles.row2}>
+                            <div className={styles.category}>
+                                {transaction.category[0]}
+                            </div>
+                            <div className={styles.date}>
+                                {moment(transaction.date, "YYYYMMDD").fromNow()}
+                            </div>
+                        </div>
                     </div>
                 )
             }

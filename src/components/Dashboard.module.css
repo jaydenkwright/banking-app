@@ -1,0 +1,9 @@
+.welcome{
+    color: #141c35;
+    font-size: 3em;
+    font-weight: 700;
+    text-align: left;
+    margin-top: .3em;
+    margin-left: 1em;
+    animation: fadeIn 1s ease;
+}
