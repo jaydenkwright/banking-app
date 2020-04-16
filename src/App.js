@@ -1,13 +1,25 @@
 import React from 'react';
 import './App.css';
-import Link from './components/Link'
-import Dashboard from './components/Dashboard'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import AccountDashboard from './components/AccountDashboard'
 
 function App() {
   return (
-    <div className="App">
-      <Dashboard/>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/">
+          <AccountDashboard/>
+        </Route>
+        <Route path="/account">
+          <AccountDashboard/>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

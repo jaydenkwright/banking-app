@@ -105,3 +105,21 @@
     font-weight: 400;
     color: #364148;
 }
+
+.titles{
+    color: #202e56;
+    font-size: 2em;
+    font-weight: 600;
+    text-align: left;
+    margin-top: .3em;
+    margin-left: 1.5em;
+    animation: fadeIn 1.3s ease;
+}
+
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }100%{
+        opacity: 1;
+    }
+}

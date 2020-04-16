@@ -279,7 +279,7 @@ router.get('/account/:id', async(req, res) => {
     const { id } = req.params
     try{
         const account = await Accounts.findOne({ 'userId': '5e62dcfeadbd5109fecf0ddb', 'accountId': id})
-            .then(account => console.log(account))
+            .then(account => res.json({ account: account}))
     }catch(err){
         console.log(err)
     }
