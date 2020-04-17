@@ -50,7 +50,7 @@
 .transactionPrice{
     text-align: center;
     font-size: 1em;
-    padding: 0em 0em 1em 0em;
+    padding: 0em 0em .7em 0em;
     justify-content: center;
     color: #f5f5f5;
     font-weight: 600;
@@ -71,7 +71,7 @@
 .transactionPriceRed{
     text-align: center;
     font-size: 1em;
-    padding: 0em 0em 1em 0em;
+    padding: 0em 0em .7em 0em;
     justify-content: center;
     color: #f5f5f5;
     font-weight: 600;

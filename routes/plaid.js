@@ -27,7 +27,7 @@ router.post('/link', (req, res) => {
                 const { available_products,billed_products,institution_id,webhook } = result.item
                 Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'institutionId': institution_id}, (err, items) => {
                     if(!items){
-                        client.getInstitutionById(institution_id, (err, result) => {
+                        client.getInstitutionById(institution_id, (err, result) => { 
                             const { name } = result.institution
                             const newItem = new Items({
                                 userId: "5e62dcfeadbd5109fecf0ddb",
@@ -266,7 +266,7 @@ router.get('/item/:id', async (req, res) => {
     const { id } = req.params
     try{
         const item = await Items.findOne({ 'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': id})
-            .then(item => res.json({ items: item}))
+            .then(item => res.json({ item: item}))
     }catch(err){
         console.log(err)
     }
