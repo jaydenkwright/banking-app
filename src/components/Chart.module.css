@@ -4,7 +4,7 @@
     margin-top: 1em;
     border-Radius: 10px;
     width: 85vw;
-    height: 17em;
+    min-height: 17em;
     background-image: linear-gradient(to right, #b1bdcf, #E0E5EC);
     box-Shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px #cad5e1;
     animation: fadeIn 1.5s ease;
@@ -17,4 +17,12 @@
     font-weight: 600;
     text-align: left;
     animation: fadeIn 2s ease;
+}
+
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }100%{
+        opacity: 1;
+    }
 }

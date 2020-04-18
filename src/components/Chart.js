@@ -8,10 +8,12 @@ export default function Chart() {
     const [transactionData, setTransactionData] = useState([])
     const [labels, setLabels] = useState([])
     const [values, setValues] = useState([])
+    const [loaded, setLoaded] = useState(false)
     const getChartData = async () => {
         const res = await axios('/plaid/transactions')
         console.log(res.data)
         setTransactionData(res.data.transactions)
+        setLoaded(true)
         const label = res.data.transactions.slice(0, 5).map((transaction) => {
             return transaction.name;
         });
@@ -30,8 +32,9 @@ export default function Chart() {
         labels: labels,
         datasets: [{
             label: 'Transactions',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: '#ef5350',
+            hoverBackgroundColor: '#ef5350',
+            borderColor: '#a1b0c5',
             data: values,
         }]
     }
@@ -45,27 +48,48 @@ export default function Chart() {
         },
         scales:{
             yAxes: [{
-                display: false
+                display: false,
+                ticks: {
+                    max: 100
+                }
             }],
             xAxes: [{
+                barPercentage: .7,
+                gridLines: {
+                    display:false
+                },
                 ticks: {
                     callback: (value) => {
-                        return value.substr(0, 10)
-                    }
+                        return `${value.substr(0, 7)}...`
+                    },
+                    fontColor: '#192443'
                 }
-            }]
+            }],
+            layout: {
+                padding: {
+                    top: 5,
+                    left: 15,
+                    right: 15,
+                    bottom: 15
+                }
+            }
         }
         
     }
 
     return (
         <div>
-            <div className={styles.chartContainer}>
-                <div className={styles.chartTitle}>
-                    Recent Transactions
+            {loaded ? 
+                <div className={styles.chartContainer}>
+                    <div className={styles.chartTitle}>
+                        Recent Transactions
+                    </div>
+                    <Bar 
+                        data={chartData} 
+                        options={options}
+                    />
                 </div>
-                <Bar data={chartData} options={options}/>
-            </div>
+            : null}       
         </div>
     )
 }
