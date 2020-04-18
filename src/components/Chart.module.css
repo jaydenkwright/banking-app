@@ -1,37 +1,20 @@
-.item{
+.chartContainer{
     margin-left: auto;
     margin-right: auto;
     margin-top: 1em;
     border-Radius: 10px;
     width: 85vw;
-    height: 7em;
+    height: 17em;
     background-image: linear-gradient(to right, #b1bdcf, #E0E5EC);
     box-Shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px #cad5e1;
     animation: fadeIn 1.5s ease;
 }
 
-.itemTitle{
+.chartTitle{
     color: #192443;
-    font-size: 2.5em;
+    font-size: 2em;
     padding: .5em 0 0 .5em;
     font-weight: 600;
     text-align: left;
     animation: fadeIn 2s ease;
-}
-
-.itemSubtitle{
-    color: #364148;
-    font-size: 1em;
-    padding: .5em 0 0 1.3em;
-    font-weight: 500;
-    text-align: left;
-    animation: fadeIn 1.5s ease;
-}
-
-@keyframes fadeIn {
-    0%{
-        opacity: 0;
-    }100%{
-        opacity: 1;
-    }
 }

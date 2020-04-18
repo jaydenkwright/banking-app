@@ -4,11 +4,12 @@ import axios from 'axios'
 
 export default function Item() {
     const [item, setItem] = useState([])
+    const [loaded, setLoaded] = useState(false)
 
     const getItem = async () => {
         const res = await axios.get('/plaid/item/epnnZE9xbKcXZVkLALLvU4vdpPEQp3tLNnn4z')
         setItem(res.data.item)
-        console.log(res.data.item.name)
+        setLoaded(true)
     }
     useEffect(() => {
         getItem()
@@ -16,14 +17,16 @@ export default function Item() {
     const { institutionName } = item
     return (
         <div>
-            <div className={styles.item}>
-                <div className={styles.itemTitle}>
-                    {institutionName}
+            {loaded ? 
+                <div className={styles.item}>
+                    <div className={styles.itemTitle}>
+                        {institutionName}
+                    </div>
+                    <div className={styles.itemSubtitle}>
+                        Primary Account
+                    </div>
                 </div>
-                <div className={styles.itemSubtitle}>
-                    Your Primary Account
-                </div>
-            </div>
+            : null}   
         </div>
     )
 }
