@@ -3,7 +3,6 @@ import axios from 'axios'
 import styles from './Chart.module.css'
 import { Bar } from 'react-chartjs-2'
 
-
 export default function Chart() {
     const [transactionData, setTransactionData] = useState([])
     const [labels, setLabels] = useState([])
@@ -11,14 +10,14 @@ export default function Chart() {
     const [loaded, setLoaded] = useState(false)
     const getChartData = async () => {
         const res = await axios('/plaid/transactions')
-        console.log(res.data)
-        setTransactionData(res.data.transactions)
+        const  { transactions } = res.data
+        setTransactionData(transactions)
         setLoaded(true)
-        const label = res.data.transactions.slice(0, 5).map((transaction) => {
+        const label = transactions.slice(0, 5).map((transaction) => {
             return transaction.name;
         });
         setLabels(label)
-        const value = res.data.transactions.slice(0, 5).map((transaction) => {
+        const value = transactions.slice(0, 5).map((transaction) => {
             return transaction.amount
         })
         setValues(value)
@@ -33,9 +32,10 @@ export default function Chart() {
         datasets: [{
             label: 'Transactions',
             backgroundColor: '#ef5350',
-            hoverBackgroundColor: '#ef5350',
+            hoverBackgkroundColor: '#ef5350',
             borderColor: '#a1b0c5',
             data: values,
+            barPercentage: .7,
         }]
     }
 
@@ -48,13 +48,13 @@ export default function Chart() {
         },
         scales:{
             yAxes: [{
-                display: false,
+                display: true,
                 ticks: {
-                    max: 100
+                    max: 100,
+                    fontColor: '#192443'
                 }
             }],
             xAxes: [{
-                barPercentage: .7,
                 gridLines: {
                     display:false
                 },
