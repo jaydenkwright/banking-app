@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import styles from './Transactions.module.css'
+import styles from './styles/Transactions.module.css'
 import axios from 'axios'
 import moment from 'moment'
 

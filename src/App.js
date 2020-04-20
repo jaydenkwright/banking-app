@@ -7,15 +7,16 @@ import {
   Link
 } from "react-router-dom";
 import AccountDashboard from './components/AccountDashboard'
+import Dashboard from './components/Dashboard'
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/">
-          <AccountDashboard/>
+        <Route path="/" exact>
+          <Dashboard/>
         </Route>
-        <Route path="/account">
+        <Route path="/account" exact>
           <AccountDashboard/>
         </Route>
       </Switch>

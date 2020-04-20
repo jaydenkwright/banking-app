@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import styles from './Item.module.css'
+import styles from './styles/Item.module.css'
 import axios from 'axios'
 
 export default function Item() {

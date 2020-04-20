@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { PlaidLink } from 'react-plaid-link';
-import styles from './Link.module.css'
+import styles from './styles/Link.module.css'
 import axios from 'axios'
 import moment from 'moment'
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import styles from './Chart.module.css'
+import styles from './styles/Chart.module.css'
 import { Bar } from 'react-chartjs-2'
 
 export default function Chart() {

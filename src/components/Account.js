@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import styles from './Account.module.css'
+import styles from './styles/Account.module.css'
 import axios from 'axios'
 
 export default function Account() {

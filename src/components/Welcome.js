@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './Welcome.module.css'
+import styles from './styles/Welcome.module.css'
 
 export default function Welcome() {
     return (
