@@ -8,7 +8,6 @@ export default function Transactions() {
     const [transactions, setTransactions] = useState([])
     const [loaded, setLoaded] = useState(false)
     const { id } = useParams()
-    console.log(id)
     const getTransactions = async () => {
         const res = await axios.get(
             id ? `/plaid/transactions/${id}` :
