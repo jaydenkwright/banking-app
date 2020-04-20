@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useParams } from "react-router-dom";
 import styles from './styles/Transactions.module.css'
 import axios from 'axios'
 import moment from 'moment'
@@ -6,9 +7,13 @@ import moment from 'moment'
 export default function Transactions() {
     const [transactions, setTransactions] = useState([])
     const [loaded, setLoaded] = useState(false)
-
+    const { id } = useParams()
+    console.log(id)
     const getTransactions = async () => {
-        const res = await axios.get('/plaid/transactions/wPZZrE4XgLuzJvA8b88EhZmKgzgL36trzPLrV')
+        const res = await axios.get(
+            id ? `/plaid/transactions/${id}` :
+            `/plaid/transactions`
+        )
         setTransactions(res.data.transactions)
         setLoaded(true)
     }

@@ -16,7 +16,7 @@ function App() {
         <Route path="/" exact>
           <Dashboard/>
         </Route>
-        <Route path="/account" exact>
+        <Route path="/account/:id">
           <AccountDashboard/>
         </Route>
       </Switch>
