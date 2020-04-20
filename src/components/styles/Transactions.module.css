@@ -116,6 +116,26 @@
     animation: fadeIn 1.3s ease;
 }
 
+.link{
+    text-decoration: none;
+    color: #202e56;
+}
+
+.link:hover{
+    text-decoration: none;
+    color: #202e56;
+}
+
+.link:visited{
+    text-decoration: none;
+    color: #202e56;
+}
+
+.link:active{
+    text-decoration: none;
+    color: #202e56;
+}
+
 @keyframes fadeIn {
     0%{
         opacity: 0;

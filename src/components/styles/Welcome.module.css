@@ -8,6 +8,27 @@
     animation: fadeIn 1s ease;
 }
 
+.link{
+    text-decoration: none;
+    color: #141c35;
+}
+
+.link:hover{
+    text-decoration: none;
+    color: #141c35;
+}
+
+.link:visited{
+    text-decoration: none;
+    color: #141c35;
+}
+
+.link:active{
+    text-decoration: none;
+    color: #141c35;
+}
+
+
 @keyframes fadeIn {
     0%{
         opacity: 0;

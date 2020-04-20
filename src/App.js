@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import AccountDashboard from './components/AccountDashboard'
 import Dashboard from './components/Dashboard'
+import TransactionDashboard from './components/TransactionDashboard'
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
         </Route>
         <Route path="/account/:id">
           <AccountDashboard/>
+        </Route>
+        <Route path="/transaction/:id">
+          <TransactionDashboard/>
         </Route>
       </Switch>
     </Router>

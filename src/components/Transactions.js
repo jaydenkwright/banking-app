@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from "react-router-dom";
+import { useParams,Link } from "react-router-dom";
 import styles from './styles/Transactions.module.css'
 import axios from 'axios'
 import moment from 'moment'
@@ -13,6 +13,7 @@ export default function Transactions() {
             id ? `/plaid/transactions/${id}` :
             `/plaid/transactions`
         )
+        console.log(res.data.transactions)
         setTransactions(res.data.transactions)
         setLoaded(true)
     }
@@ -41,7 +42,7 @@ export default function Transactions() {
                             <div className={styles.transaction}>
                                 <div className={styles.row}>
                                     <div className={styles.transactionTitle}>
-                                        {transaction.name}
+                                        <Link className={styles.link} to={`/transaction/${transaction.transaction_id}`}>{transaction.name}</Link>
                                     </div>
                                     <div className={transaction.amount > 0 ? styles.transactionPriceRed : styles.transactionPrice}>
                                         {displayNumber(transaction.amount)}

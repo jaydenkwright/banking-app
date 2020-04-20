@@ -252,7 +252,7 @@ router.get('/transaction/:id', async (req, res) => {
     console.log(id)
     try{
         const transaction = await Transactions.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'transactionId': id})
-            .then(transaction => res.json({ transactions: transaction }))
+            .then(transaction => res.json({ transaction: transaction }))
     }catch(err){
         console.log(err)
     }
