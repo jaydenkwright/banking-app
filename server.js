@@ -12,16 +12,11 @@ app.use(cors({
     origin: 'http://localhost:3000',
 }));
 
-const { receivePublicToken, getTransactions } = require("./controllers/controller.js");
-
 mongoose.connect(process.env.DB, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
     .then(() => console.log('Connected to databse'))
     .catch(err => console.log(err))
 
-//app.post("/auth/public_token", receivePublicToken);
 app.use('/plaid/', plaid)
-
-app.get("/transactions", getTransactions);
 
 const port = process.env.PORT || 5000
 
