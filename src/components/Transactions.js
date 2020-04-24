@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams,Link } from "react-router-dom";
 import styles from './styles/Transactions.module.css'
+import {displayNumber, shortenString} from './functions'
 import axios from 'axios'
 import moment from 'moment'
 
@@ -21,14 +22,6 @@ export default function Transactions() {
         getTransactions()
     }, [])
 
-    const displayNumber = (number) => {
-        if(number > 0){
-            return `-$${number}`
-        }else{
-            return `+$${Math.abs(number)}`
-        }
-    }
-
     return (
         <div>
             {loaded ? 
@@ -41,7 +34,7 @@ export default function Transactions() {
                             <div className={styles.transaction}>
                                 <div className={styles.row}>
                                     <div className={styles.transactionTitle}>
-                                        <Link className={styles.link} to={`/transaction/${transaction.transaction_id}`}>{transaction.name}</Link>
+                                        <Link className={styles.link} to={`/transaction/${transaction.transaction_id}`}>{shortenString(transaction.name, 19)}</Link>
                                     </div>
                                     <div className={transaction.amount > 0 ? styles.transactionPriceRed : styles.transactionPrice}>
                                         {displayNumber(transaction.amount)}

@@ -5,3 +5,11 @@ export const displayNumber = (number) => {
         return `+$${Math.abs(number)}`
     }
 }
+
+export const shortenString = (string, max) => {
+    if(string.length >= max){
+        return `${string.substr(0, max)}...`
+    }else{
+        return string
+    }
+}
