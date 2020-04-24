@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import styles from './styles/Transaction.module.css'
+import {displayNumber} from './functions'
 import axios from 'axios'
 
 export default function Transaction() {
@@ -19,13 +20,6 @@ export default function Transaction() {
         getTransaction()
     }, [])
 
-    const displayNumber = (number) => {
-        if(number > 0){
-            return `-$${number}`
-        }else{
-            return `+$${Math.abs(number)}`
-        }
-    }
     const { name, amount } = transactionData
     return (
         <div>
