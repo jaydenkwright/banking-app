@@ -249,7 +249,6 @@ router.get('/transactions/:accountId', (req, res) => {
 // @access  private
 router.get('/transaction/:id', async (req, res) => {
     const { id } = req.params
-    console.log(id)
     try{
         const transaction = await Transactions.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'transactionId': id})
             .then(transaction => res.json({ transaction: transaction }))

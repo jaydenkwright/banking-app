@@ -13,7 +13,6 @@ export default function Transactions() {
             id ? `/plaid/transactions/${id}` :
             `/plaid/transactions`
         )
-        console.log(res.data.transactions)
         setTransactions(res.data.transactions)
         setLoaded(true)
     }

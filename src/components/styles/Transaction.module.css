@@ -4,8 +4,78 @@
     margin-top: 1em;
     border-Radius: 10px;
     width: 85vw;
-    height: 17em;
+    height: 10em;
+    padding-bottom: 1em;
     background-image: linear-gradient(to right, #b1bdcf, #E0E5EC);
     box-Shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px #cad5e1;
     animation: fadeIn 1.5s ease;
+}
+
+.row{
+    height: 3.5em;
+    width: 100%;
+    display: flex;
+}
+
+.transactionTitle{
+    color: #192443;
+    font-size: 2.5em;
+    padding: .5em 0 0 .5em;
+    font-weight: 600;
+    text-align: left;
+    animation: fadeIn 2s ease;
+}
+
+.category{
+    color: #364148;
+    font-size: 1.5em;
+    padding: .5em 0 0 1.3em;
+    font-weight: 500;
+    text-align: left;
+    animation: fadeIn 1.5s ease;
+    flex: 5;
+}
+
+.transactionPrice{
+    text-align: center;
+    font-size: 1em;
+    padding: 0em 1em 0em 1em;
+    justify-content: center;
+    color: #f5f5f5;
+    font-weight: 600;
+    min-width: 1em;
+    max-width: 5em;
+    height: 1.2em;
+    margin-top: 1.3em;
+    margin-bottom: auto;
+    margin-right: 1em;
+    margin-left: 2em;
+    border-radius: 5px;
+    cursor: pointer;
+    background-image: linear-gradient( #50bf85, #63c692);
+    box-shadow: 9px 9px 16px #a1b0c5;
+    animation: fadeIn 2s ease;
+    flex: 1;
+}
+
+.transactionPriceRed{
+    text-align: center;
+    font-size: 1em;
+    padding: 0em 1em 0em 1em;
+    justify-content: center;
+    color: #f5f5f5;
+    font-weight: 600;
+    min-width: 1em;
+    max-width: 5em;
+    height: 1.2em;
+    margin-top: 1.3em;
+    margin-bottom: auto;
+    margin-right: 1em;
+    margin-left: 2em;
+    border-radius: 5px;
+    cursor: pointer;
+    background-image: linear-gradient( #ef5350, #f16562);
+    box-shadow: 9px 9px 16px #a1b0c5;
+    animation: fadeIn 2s ease;
+
 }
