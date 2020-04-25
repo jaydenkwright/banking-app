@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Account from './Account'
 import Transactions from './Transactions'
 import Item from './Item'
