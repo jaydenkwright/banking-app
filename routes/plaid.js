@@ -277,8 +277,36 @@ router.get('/item/:id', async (req, res) => {
 router.get('/account/:id', async(req, res) => {
     const { id } = req.params
     try{
-        const account = await Accounts.findOne({ 'userId': '5e62dcfeadbd5109fecf0ddb', 'accountId': id})
-            .then(account => res.json({ account: account}))
+        Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'epnnZE9xbKcXZVkLALLvU4vdpPEQp3tLNnn4z'}, async (err, item) => {
+            const { accessToken } = item
+            client.getBalance(accessToken, {account_ids: [id]}, async (err, result) => {
+                const { balances } = result.accounts[0]
+                const account = await Accounts.findOne({ 'userId': '5e62dcfeadbd5109fecf0ddb', 'accountId': id})
+                    .then(account => {
+                        if(balances.current === account.balances.current && 
+                            balances.available === account.balances.available){
+                            console.log('same')
+                            res.json({ account: account})
+                        }else{
+                            res.json({ account: result.accounts[0]})
+                            Accounts.updateOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'accountId': id}, {$set: {
+                                balances: {
+                                    available: balances.available,
+                                    current: balances.current
+                                }
+                            }}, (err, result => {
+                                console.log('updated')
+                            }))
+                        }
+                    })
+
+                // if(account.balances.current === balances.current && account.balances.available === balances.available){
+                //     console.log('no change')
+                // }else{
+                //     console.log('new balance')
+                // }
+            })
+        })
     }catch(err){
         console.log(err)
     }

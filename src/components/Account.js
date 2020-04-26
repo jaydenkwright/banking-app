@@ -14,6 +14,7 @@ export default function Account() {
         )
         setAccount(res.data.account)
         setLoaded(true)
+        console.log(res.data)
     }
     useEffect(() => {
         getAccount()
