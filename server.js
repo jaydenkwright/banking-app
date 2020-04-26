@@ -3,6 +3,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 const app = express();
 const plaid = require('./routes/plaid')
+const auth = require('./routes/Auth')
 const cors = require('cors')
 const mongoose = require('mongoose')
 
@@ -17,6 +18,7 @@ mongoose.connect(process.env.DB, { useNewUrlParser: true, useCreateIndex: true, 
     .catch(err => console.log(err))
 
 app.use('/plaid/', plaid)
+app.use('/auth/', auth)
 
 const port = process.env.PORT || 5000
 

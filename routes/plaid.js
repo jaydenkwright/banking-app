@@ -285,7 +285,6 @@ router.get('/account/:id', async(req, res) => {
                     .then(account => {
                         if(balances.current === account.balances.current && 
                             balances.available === account.balances.available){
-                            console.log('same')
                             res.json({ account: account})
                         }else{
                             res.json({ account: result.accounts[0]})
@@ -295,16 +294,9 @@ router.get('/account/:id', async(req, res) => {
                                     current: balances.current
                                 }
                             }}, (err, result => {
-                                console.log('updated')
                             }))
                         }
                     })
-
-                // if(account.balances.current === balances.current && account.balances.available === balances.available){
-                //     console.log('no change')
-                // }else{
-                //     console.log('new balance')
-                // }
             })
         })
     }catch(err){

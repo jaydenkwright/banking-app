@@ -50,7 +50,7 @@ export default function Chart() {
             yAxes: [{
                 display: true,
                 ticks: {
-                    max: 100,
+                    max: 1000,
                     fontColor: '#192443'
                 }
             }],
