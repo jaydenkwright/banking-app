@@ -79,6 +79,14 @@ router.post('/login', async (req, res) => {
     res.header('login-token', token).json({ token: token })
 })
 
+router.post('/logout', async(req, res) => {
+    try{
+        res.clearCookie('token', { path: '/', httpOnly: true})
+        res.json({message: "logged out"})
+    }catch(err){
+        res.json({message: 'There was an error'})
+    }
+})
 
 
 module.exports = router;
