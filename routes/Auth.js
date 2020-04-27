@@ -21,7 +21,30 @@ const registerSchema = joi.object({
 })
 
 router.post('/register', async (req, res) => {
+    const { firstName, lastName, email, password } = req.body
 
+    const { error } = registerSchema.validate(req.body)
+    if(error) return res.json({error: 'There was an error with your information'})
+
+    const emailExist = await Users.findOne({ email: email})
+    if(emailExist) return res.json({error: 'This email is already in use'})
+
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(password, salt)
+
+    const user = new Users({
+        firstName,
+        lastName,
+        email,
+        password: hashedPassword
+    })
+
+    try{
+        const savedUser = await user.save()
+        res.send(savedUser)
+    }catch(err){
+        res.status(400).send(err)
+    }
     
 })
 
