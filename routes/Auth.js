@@ -1,12 +1,14 @@
 const express = require('express')
 const joi = require('@hapi/joi')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const router = express.Router()
 const Users = require('../models/Users')
 
+
 const registerSchema = joi.object({
     firstName: joi.string()
-        .min()
+        .min(2)
         .required(),
     lastName: joi.string()
         .min(2)
@@ -42,10 +44,49 @@ router.post('/register', async (req, res) => {
     try{
         const savedUser = await user.save()
         res.send(savedUser)
+        console.log(savedUser)
     }catch(err){
         res.status(400).send(err)
     }
     
 })
+
+const loginSchema = joi.object({
+    email: joi.string()
+        .required(),
+    password: joi.string()
+        .required()
+})
+
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body
+    const { error } = loginSchema.validate(req.body)
+    if(error) return res.json({error: 'There was an error with your email or password'})
+
+    const emailExist = await Users.findOne({ email: email})
+    if(!emailExist) return res.json({ error: 'Email or password is incorrect' })
+
+    const validPassword = await bcrypt.compare(password, emailExist.email)
+    if(validPassword) return res.json({ error: 'Email or password is incorrect'})
+
+    const token = jwt.sign({id: emailExist._id}, process.env.TOKEN_SECRET, {
+        expiresIn: '1h'
+    })
+
+    res.cookie('token', token, {
+        httpOnly: true
+    })
+    res.header('login-token', token).json({ token: token })
+})
+
+router.post('/logout', async(req, res) => {
+    try{
+        res.clearCookie('token', { path: '/', httpOnly: true})
+        res.json({message: "logged out"})
+    }catch(err){
+        res.json({message: 'There was an error'})
+    }
+})
+
 
 module.exports = router;
