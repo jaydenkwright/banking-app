@@ -58,6 +58,26 @@ const loginSchema = joi.object({
         .required()
 })
 
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body
+    const { error } = loginSchema.validate(req.body)
+    if(error) return res.json({error: 'There was an error with your email or password'})
+
+    const emailExist = await Users.findOne({ email: email})
+    if(!emailExist) return res.json({ error: 'Email or password is incorrect' })
+
+    const validPassword = await bcrypt.compare(password, emailExist.email)
+    if(validPassword) return res.json({ error: 'Email or password is incorrect'})
+
+    const token = jwt.sign({id: emailExist._id}, process.env.TOKEN_SECRET, {
+        expiresIn: '1h'
+    })
+
+    res.cookie('token', token, {
+        httpOnly: true
+    })
+    res.header('login-token', token).json({ token: token })
+})
 
 
 
