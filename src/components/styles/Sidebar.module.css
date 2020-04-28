@@ -7,6 +7,34 @@
     width: 20vw;
     position: fixed;
     margin-right: 5em;
+    text-align: center;
+}
+
+.links{
+    font-size: 1.5em;
+    color: #192443;
+    margin: 1em 0em 0em 0em;
+    width: 100%;
+}
+
+.link{
+    text-decoration: none;
+    color: #202e56;
+}
+
+.link:hover{
+    text-decoration: none;
+    color: #202e56;
+}
+
+.link:visited{
+    text-decoration: none;
+    color: #202e56;
+}
+
+.link:active{
+    text-decoration: none;
+    color: #202e56;
 }
 
 @media screen and (max-width: 1024px){

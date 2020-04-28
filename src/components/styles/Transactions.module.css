@@ -3,7 +3,7 @@
     margin-right: auto;
     margin-top: 1em;
     border-Radius: 10px;
-    width: 80vw;
+    width: 35vw;
     min-height: 5.5em;
     background-image: linear-gradient( #ecf0f4, #E0E5EC);
     box-Shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px    rgba(255,255,255, 0.5);
@@ -115,8 +115,12 @@
     font-weight: 600;
     text-align: left;
     margin-top: .3em;
-    margin-left: 1.5em;
+    margin-left: auto;
     animation: fadeIn 1.3s ease;
+}
+
+.titleText{
+    text-align: center;
 }
 
 .link{
@@ -144,5 +148,11 @@
         opacity: 0;
     }100%{
         opacity: 1;
+    }
+}
+
+@media screen and (max-width: 1024px){
+    .transaction{
+        width: 80vw;
     }
 }

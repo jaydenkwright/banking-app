@@ -3,7 +3,7 @@
     margin-right: auto;
     margin-top: 1em;
     border-Radius: 10px;
-    width: 85vw;
+    width: 60vw;
     min-height: 10em;
     padding-bottom: 1em;
     background-image: linear-gradient(to right, #b1bdcf, #E0E5EC);
@@ -78,4 +78,10 @@
     box-shadow: 9px 9px 16px #a1b0c5;
     animation: fadeIn 2s ease;
 
+}
+
+@media screen and (max-width: 1024px){
+    .transaction{
+        width: 85vw;
+    }
 }

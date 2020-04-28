@@ -26,12 +26,9 @@ export default function Transactions() {
         <div>
             {loaded ? 
                 <div>
-                    <div className={styles.titles}>
-                        Transactions
-                    </div>
                     {
                         transactions.map(transaction => 
-                            <div className={styles.transaction}>
+                            <div className={styles.transaction} id="transactions">
                                 <div className={styles.row}>
                                     <div className={styles.transactionTitle}>
                                         <Link className={styles.link} to={`/transaction/${transaction.transaction_id}`}>{shortenString(transaction.name, 19)}</Link>
