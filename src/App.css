@@ -36,3 +36,27 @@
     transform: rotate(360deg);
   }
 }
+
+.main{
+  display: grid;
+  grid-template-columns: 20vw auto;
+}
+
+.dashboards{
+  width: 100%;
+  grid-column-start: 2;
+  text-align: center;
+  margin-left: 1em;
+}
+
+@media screen and (max-width: 1024px){
+  .main{
+    display: grid;
+    grid-template-columns: auto;
+  }
+  .dashboards{
+    width: 100%;
+    grid-column-start: 1;
+    text-align: center;
+  }
+}

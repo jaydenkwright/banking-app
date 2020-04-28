@@ -6,6 +6,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Sidebar from './components/Sidebar'
 import AccountDashboard from './components/AccountDashboard'
 import Dashboard from './components/Dashboard'
 import TransactionDashboard from './components/TransactionDashboard'
@@ -13,17 +14,22 @@ import TransactionDashboard from './components/TransactionDashboard'
 function App() {
   return (
     <Router>
-      <Switch>
-        <Route path="/" exact>
-          <Dashboard/>
-        </Route>
-        <Route path="/account/:id">
-          <AccountDashboard/>
-        </Route>
-        <Route path="/transaction/:id">
-          <TransactionDashboard/>
-        </Route>
-      </Switch>
+      <Sidebar />
+      <div className="main">
+        <div className="dashboards">
+          <Switch>
+            <Route path="/" exact>
+              <Dashboard/>
+            </Route>
+            <Route path="/account/:id">
+              <AccountDashboard/>
+            </Route>
+            <Route path="/transaction/:id">
+              <TransactionDashboard/>
+            </Route>
+          </Switch>
+        </div>
+      </div>
     </Router>
   );
 }

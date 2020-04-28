@@ -1,0 +1,16 @@
+.sidebar {
+    background-color:#BAC8D8;
+    left: 0;
+    top: 10vh;
+    bottom: 0;
+    height: 100vh;
+    width: 20vw;
+    position: fixed;
+    margin-right: 5em;
+}
+
+@media screen and (max-width: 1024px){
+    .sidebar{
+        display: none;
+    }
+}
