@@ -8,10 +8,20 @@ import styles from './styles/Dashboard.module.css'
 export default function Dashboard() {
     return (
         <div>
-            <Welcome />
-            <Item />
-            <Chart />
-            <Transactions />
+            <div className={styles.dashboard}>
+                <div className={styles.welcome}>
+                    <Welcome />
+                </div>
+                <div className={styles.item}>
+                    <Item />
+                </div>
+                <div className={styles.chart}>
+                    <Chart />
+                </div>
+                <div className={styles.transactions}>
+                    <Transactions />
+                </div>
+            </div>
         </div>
     )
 }

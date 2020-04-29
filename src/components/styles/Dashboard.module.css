@@ -1,0 +1,25 @@
+.dashboard{
+    display: grid;
+}
+
+.welcome{
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
+
+.item{
+    grid-column: 1;
+    grid-row: 2;
+    grid-row-end: 3;
+}
+
+.chart{
+    grid-column: 1;
+    grid-row-start: row1-start;
+    grid-row-start: 3;
+}
+
+.transactions{
+    grid-column: 2;
+    grid-row-start: 2;
+}
