@@ -114,7 +114,7 @@
     text-align: left;
     margin-top: .3em;
     margin-left: auto;
-    animation: fadeIn 1.3s ease;
+    animation: fadeIn 2s ease;
 }
 
 .titleText{
@@ -152,5 +152,7 @@
 @media screen and (max-width: 1024px){
     .transaction{
         width: 80vw;
+        margin-right: auto;
+        margin-left: auto;
     }
 }

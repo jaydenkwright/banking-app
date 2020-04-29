@@ -4,7 +4,6 @@
     font-weight: 700;
     text-align: left;
     margin-top: .3em;
-    margin-left: 1em;
     animation: fadeIn 1s ease;
 }
 
@@ -35,4 +34,11 @@
     }100%{
         opacity: 1;
     }
+}
+
+@media screen and (max-width: 1024px){
+    .welcome{
+        margin-left: 1em;
+    }
+
 }
