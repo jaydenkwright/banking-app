@@ -13,6 +13,8 @@ const client = new plaid.Client(
     plaid.environments[process.env.PLAID_ENV],
     { version: "2019-05-29", clientApp: "Plaid Quickstart" }
 );
+// 5ea6245e1d0a926f67a158db
+// 5e62dcfeadbd5109fecf0ddb
 
 // @route   POST /plaid/link
 // @desc    Exchange public token with with Plaid API to retrieve ACCESS_TOKEN
@@ -97,7 +99,7 @@ router.post('/link', (req, res) => {
 // @desc    Retrieve transactions from specific item
 // @access  private
 router.get('/transactions', (req, res) => {
-    Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'epnnZE9xbKcXZVkLALLvU4vdpPEQp3tLNnn4z'}, (err, items) => {
+    Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'aV3AEryXm3FDRXxazdLKtz4kw4e66Du7Djgvn'}, (err, items) => {
         const { accessToken, itemId } = items
         const startDate = moment()
             .subtract(60, "days")
@@ -174,7 +176,7 @@ router.get('/transactions', (req, res) => {
 // @access  private
 router.get('/transactions/:accountId', (req, res) => {
     const { accountId } = req.params
-    Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'epnnZE9xbKcXZVkLALLvU4vdpPEQp3tLNnn4z'}, (err, items) => {
+    Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'aV3AEryXm3FDRXxazdLKtz4kw4e66Du7Djgvn'}, (err, items) => {
         const { accessToken, itemId } = items
         const startDate = moment()
             .subtract(60, "days")
