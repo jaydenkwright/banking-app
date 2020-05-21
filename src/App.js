@@ -6,6 +6,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import AccountLink from './components/AccountLink'
 import Sidebar from './components/Sidebar'
 import AccountDashboard from './components/AccountDashboard'
 import Dashboard from './components/Dashboard'
@@ -26,6 +27,9 @@ function App() {
             </Route>
             <Route path="/transaction/:id">
               <TransactionDashboard/>
+            </Route>
+            <Route path="/link">
+              <AccountLink />
             </Route>
           </Switch>
         </div>

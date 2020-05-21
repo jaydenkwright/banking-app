@@ -7,7 +7,7 @@ export default function Item() {
     const [loaded, setLoaded] = useState(false)
 
     const getItem = async () => {
-        const res = await axios.get('/plaid/item/epnnZE9xbKcXZVkLALLvU4vdpPEQp3tLNnn4z')
+        const res = await axios.get('/plaid/item/aV3AEryXm3FDRXxazdLKtz4kw4e66Du7Djgvn')
         setItem(res.data.item)
         setLoaded(true)
     }
