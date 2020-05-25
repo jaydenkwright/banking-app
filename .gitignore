@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 
+todo.md 
 .env
 
 # testing

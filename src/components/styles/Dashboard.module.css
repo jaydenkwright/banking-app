@@ -1,49 +1,18 @@
 .dashboard{
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 4% 10% 10%;
+    display: flex;
 }
 
-.welcome{
-    grid-column: 1;
-    grid-row: 1;
-}
-
-.item{
-    grid-column: 1;
-    grid-row: 1;
-    grid-row-end: 2;
-}
-
-.chart{
-    grid-column: 1;
-    grid-row: 2;
+.itemChart{
+    flex: 1
 }
 
 .transactions{
-    grid-column: 2;
-    grid-row: 1;
+    flex: 1
 }
 
+
 @media screen and (max-width: 1024px){
-    .dashboard{
-        display: grid;
-        grid-template-columns: 100%;
-        grid-template-rows: 4% 8% 5%;
-    }
-    
-    .item{
-        grid-column: 1;
-        grid-row: 1;
-    }
-    
-    .chart{
-        grid-column: 1;
-        grid-row: 2;
-    }
-    
-    .transactions{
-        grid-column: 1;
-        grid-row: 3;
-    } 
+   .dashboard{
+        flex-direction: column;
+   }
 }
