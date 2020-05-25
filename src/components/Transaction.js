@@ -11,6 +11,7 @@ export default function Transaction() {
     const { id } = useParams()
     const getTransaction = async () => {
         const res = await axios.get(`/plaid/transaction/${id}`)
+        console.log(res.data)
         setCategory(res.data.transaction.category[0])
         setLoaded(true)
         setTransactionData(res.data.transaction)

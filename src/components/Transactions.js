@@ -16,11 +16,13 @@ export default function Transactions() {
         )
         setTransactions(res.data.transactions)
         setLoaded(true)
+        console.log(res.data.transactions)
     }
 
     useEffect(() => {
         getTransactions()
     }, [])
+
 
     return (
         <div>
@@ -34,7 +36,7 @@ export default function Transactions() {
                             <div className={styles.transaction} id="transactions">
                                 <div className={styles.row}>
                                     <div className={styles.transactionTitle}>
-                                        <Link className={styles.link} to={`/transaction/${transaction.transactionId}`}>{shortenString(transaction.name, 19)}</Link>
+                                        <Link className={styles.link} to={`/transaction/${transaction.transaction_id}`}>{shortenString(transaction.name, 19)}</Link>
                                     </div>
                                     <div className={transaction.amount > 0 ? styles.transactionPriceRed : styles.transactionPrice}>
                                         {displayNumber(transaction.amount)}
