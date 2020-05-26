@@ -10,7 +10,8 @@ import AccountLink from './components/AccountLink'
 import Sidebar from './components/Sidebar'
 import AccountDashboard from './components/AccountDashboard'
 import Dashboard from './components/Dashboard'
-import TransactionDashboard from './components/TransactionDashboard'
+import TransactionDashboard from './componentks/TransactionDashboard'
+import Register from './components/Register'
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
             </Route>
             <Route path="/link">
               <AccountLink />
+            </Route>
+            <Route path="/register">
+              <Register />
             </Route>
           </Switch>
         </div>
