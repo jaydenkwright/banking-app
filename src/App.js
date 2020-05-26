@@ -10,7 +10,7 @@ import AccountLink from './components/AccountLink'
 import Sidebar from './components/Sidebar'
 import AccountDashboard from './components/AccountDashboard'
 import Dashboard from './components/Dashboard'
-import TransactionDashboard from './componentks/TransactionDashboard'
+import TransactionDashboard from './components/TransactionDashboard'
 import Register from './components/Register'
 
 function App() {
