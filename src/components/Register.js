@@ -1,16 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styles from './styles/Register.module.css'
+import axios from 'axios'
 
 export default function Register() {
     const [firstName, setFirstName] = useState(undefined)
     const [lastName, setLastName] = useState(undefined)
     const [email, setEmail] = useState(undefined)
     const [password, setPassword] = useState(undefined)
-    const submit = (e) => {
-        e.preventDefault()
-        
+    const register = async () => {
+        const res = await axios.post('/auth/register', {
+            firstName,
+            lastName,
+            email,
+            password
+        }, {
+            'withCredentials': true
+        })
     }
-
+    const submit = async (e) => {
+        e.preventDefault()
+        register()
+    }
     return (
         <div>
             <form className={styles.form} onSubmit={submit}>
@@ -26,7 +36,7 @@ export default function Register() {
                 <div className={styles.textField}>
                     <input className={styles.textbox} type='password' placeholder='Password...' onChange={(e) => setPassword(e.target.value)}/>
                 </div>
-                <input className={styles.submitBtn} type='submit' />
+                    <input className={styles.submitBtn} type='submit' />
             </form>
         </div>
     )
