@@ -5,13 +5,20 @@ import axios from 'axios'
 export default function Login() {
     const [email, setEmail] = useState(undefined)
     const [password, setPassword] = useState(undefined)
+    const [error, setError] = useState(undefined)
 
     const submit = (e) => {
-        
+        e.preventDefault()
+        if(email && password){
+            console.log('working')
+        }else{
+            setError('Please enter an email and password')
+        }
     }
 
     return (
         <div>
+            {error ? error : null}
             <form className={styles.form} onSubmit={submit}>
                 <div className={styles.textField}>
                     <input className={styles.textbox} type='email' placeholder='Email...' onChange={(e) => setEmail(e.target.value)}/>
