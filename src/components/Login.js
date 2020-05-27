@@ -14,7 +14,9 @@ export default function Login() {
         }, {
             'withCredentials': true
         })
-        console.log(res)
+        if(res.data.error){
+            setError(res.data.error)
+        }
     }
 
     const submit = (e) => {
