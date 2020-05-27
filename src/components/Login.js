@@ -7,10 +7,20 @@ export default function Login() {
     const [password, setPassword] = useState(undefined)
     const [error, setError] = useState(undefined)
 
+    const login = async () => {
+        const res = await axios.post('/auth/login',{
+            email,
+            password
+        }, {
+            'withCredentials': true
+        })
+        console.log(res)
+    }
+
     const submit = (e) => {
         e.preventDefault()
         if(email && password){
-            console.log('working')
+            login()
         }else{
             setError('Please enter an email and password')
         }
