@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
 const Users = require('../models/Users')
-
+const verify = require('./middleware/verifyToken')
 
 const registerSchema = joi.object({
     firstName: joi.string()
@@ -90,6 +90,16 @@ router.post('/logout', async(req, res) => {
         res.json({message: "logged out"})
     }catch(err){
         res.json({message: 'There was an error'})
+    }
+})
+
+router.get('/user', verify, async (req, res) => {
+    try{
+        const { id } = req.user
+        const users = await Users.findOne({'_id': id})
+        .then(user => res.json({ user: user }))
+    }catch(err){
+        
     }
 })
 
