@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import styles from './styles/Login.module.css'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom';
 
-export default function Login() {
+export default function Login({ setIsLoggedIn }) {
     const [email, setEmail] = useState(undefined)
     const [password, setPassword] = useState(undefined)
     const [error, setError] = useState(undefined)
-
+    const history = useHistory()
     const login = async () => {
         const res = await axios.post('/auth/login',{
             email,
@@ -14,6 +15,8 @@ export default function Login() {
         }, {
             'withCredentials': true
         })
+        setIsLoggedIn(true)
+        history.push(`/`)
         if(res.data.error){
             setError(res.data.error)
         }
