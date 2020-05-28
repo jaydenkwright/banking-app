@@ -5,6 +5,7 @@ const moment = require('moment')
 const Items = require('../models/Items')
 const Accounts = require('../models/Accounts')
 const Transactions = require('../models/Transactions')
+const verify = require('./middleware/verifyToken')
 
 const client = new plaid.Client(
     process.env.PLAID_CLIENT_ID,
@@ -98,7 +99,7 @@ router.post('/link', (req, res) => {
 // @route   GET /plaid/transactions/
 // @desc    Retrieve transactions from specific item
 // @access  private
-router.get('/transactions', (req, res) => {
+router.get('/transactions', verify, (req, res) => {
     Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'aV3AEryXm3FDRXxazdLKtz4kw4e66Du7Djgvn'}, (err, items) => {
         const { accessToken, itemId } = items
         const startDate = moment()
@@ -174,7 +175,7 @@ router.get('/transactions', (req, res) => {
 // @route   GET /plaid/transactions/:accountId
 // @desc    Retrieve transactions from specific account
 // @access  private
-router.get('/transactions/:accountId', (req, res) => {
+router.get('/transactions/:accountId', verify, (req, res) => {
     const { accountId } = req.params
     Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'aV3AEryXm3FDRXxazdLKtz4kw4e66Du7Djgvn'}, (err, items) => {
         const { accessToken, itemId } = items
@@ -249,7 +250,7 @@ router.get('/transactions/:accountId', (req, res) => {
 // @route   GET plaid/transactions/:id
 // @desc    Get individual transaction from transaction ID
 // @access  private
-router.get('/transaction/:id', async (req, res) => {
+router.get('/transaction/:id', verify, async (req, res) => {
     const { id } = req.params
     try{
         const transaction = await Transactions.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'transactionId': id})
@@ -263,7 +264,7 @@ router.get('/transaction/:id', async (req, res) => {
 // @route   GET /plaid/items/:id
 // @desc    Retrieve information on specific item
 // @access  private
-router.get('/item/:id', async (req, res) => {
+router.get('/item/:id', verify, async (req, res) => {
     const { id } = req.params
     try{
         const item = await Items.findOne({ 'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': id})
@@ -276,7 +277,7 @@ router.get('/item/:id', async (req, res) => {
 // @route   GET /plaid/accounts/:id
 // @desc    Retrieve information on specific account
 // @access  private
-router.get('/account/:id', async(req, res) => {
+router.get('/account/:id', verify, async(req, res) => {
     const { id } = req.params
     try{
         Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'epnnZE9xbKcXZVkLALLvU4vdpPEQp3tLNnn4z'}, async (err, item) => {

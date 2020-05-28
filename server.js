@@ -6,11 +6,14 @@ const plaid = require('./routes/plaid')
 const auth = require('./routes/Auth')
 const cors = require('cors')
 const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser')
 
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
     origin: 'http://localhost:3000',
+    credentials: true
 }));
 
 mongoose.connect(process.env.DB, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})

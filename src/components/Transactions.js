@@ -12,7 +12,9 @@ export default function Transactions() {
     const getTransactions = async () => {
         const res = await axios.get(
             id ? `/plaid/transactions/${id}` :
-            `/plaid/transactions`
+            `/plaid/transactions`, {
+                'withCredentials': true
+            }
         )
         setTransactions(res.data.transactions)
         setLoaded(true)
