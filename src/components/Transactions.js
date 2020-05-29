@@ -34,22 +34,22 @@ export default function Transactions() {
             {loaded ? 
                 <div>
                     {
-                        transactions.map(transaction => 
+                        transactions.map(({amount, category, date, transaction_id, name}) => 
                             <div className={styles.transaction} id="transactions">
                                 <div className={styles.row}>
                                     <div className={styles.transactionTitle}>
-                                        <Link className={styles.link} to={`/transaction/${transaction.transaction_id}`}>{shortenString(transaction.name, 19)}</Link>
+                                        <Link className={styles.link} to={`/transaction/${transaction_id}`}>{shortenString(name, 19)}</Link>
                                     </div>
-                                    <div className={transaction.amount > 0 ? styles.transactionPriceRed : styles.transactionPrice}>
-                                        {displayNumber(transaction.amount)}
+                                    <div className={amount > 0 ? styles.transactionPriceRed : styles.transactionPrice}>
+                                        {displayNumber(amount)}
                                     </div>
                                 </div>   
                                 <div className={styles.row2}>
                                     <div className={styles.category}>
-                                        {transaction.category[0]}
+                                        {category[0]}
                                     </div>
                                     <div className={styles.date}>
-                                        {moment(transaction.date, "YYYYMMDD").fromNow()}
+                                        {moment(date, "YYYYMMDD").fromNow()}
                                     </div>
                                 </div>
                             </div>
