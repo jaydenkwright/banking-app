@@ -20,7 +20,8 @@ const client = new plaid.Client(
 // @route   POST /plaid/link
 // @desc    Exchange public token with with Plaid API to retrieve ACCESS_TOKEN
 // @access  private
-router.post('/link', (req, res) => {
+router.post('/link', verify, (req, res) => {
+    const { id } = req.user
     let PUBLIC_TOKEN = req.body.public_token // get Public token from PlaidLink on the client side
     client.exchangePublicToken(PUBLIC_TOKEN, (error, tokenResponse) => {
         const ACCESS_TOKEN = tokenResponse.access_token;
@@ -28,12 +29,12 @@ router.post('/link', (req, res) => {
         console.log(ACCESS_TOKEN);
             client.getItem(ACCESS_TOKEN, (err, result) => {
                 const { available_products,billed_products,institution_id,webhook } = result.item
-                Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'institutionId': institution_id}, (err, items) => {
+                Items.findOne({'userId': id, 'institutionId': institution_id}, (err, items) => {
                     if(!items){
                         client.getInstitutionById(institution_id, (err, result) => { 
                             const { name } = result.institution
                             const newItem = new Items({
-                                userId: "5e62dcfeadbd5109fecf0ddb",
+                                userId: id,
                                 accessToken: ACCESS_TOKEN,
                                 itemId: ITEM_ID,
                                 availableProducts: available_products,
@@ -53,7 +54,7 @@ router.post('/link', (req, res) => {
                         console.log('added')
                     }else{
                         console.log('in system')
-                        Items.updateOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'institutionId': institution_id}, 
+                        Items.updateOne({'userId': id, 'institutionId': institution_id}, 
                             {$set: {
                                 accessToken: ACCESS_TOKEN
                             }}, (err, result) => {
@@ -66,11 +67,11 @@ router.post('/link', (req, res) => {
                 const accounts = result.accounts
                 accounts.map(
                     account => 
-                        Accounts.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'mask': account.mask, 'name': account.name, 'subtype': account.subtype}, (err, acc) => {
+                        Accounts.findOne({'userId': id, 'mask': account.mask, 'name': account.name, 'subtype': account.subtype}, (err, acc) => {
                             const { account_id,mask,balances,name,official_name,subtype,type } = account
                             if(!acc){
                                   new Accounts({
-                                      userId: '5e62dcfeadbd5109fecf0ddb',
+                                      userId: id,
                                       itemId: ITEM_ID,
                                       accountId: account_id,
                                       mask: mask,
@@ -100,7 +101,8 @@ router.post('/link', (req, res) => {
 // @desc    Retrieve transactions from specific item
 // @access  private
 router.get('/transactions', verify, (req, res) => {
-    Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'aV3AEryXm3FDRXxazdLKtz4kw4e66Du7Djgvn'}, (err, items) => {
+    const { id } = req.user
+    Items.findOne({'userId': id, 'itemId': 'vwRApr3ZqasKqVdjxrNQFbn3R8B9BatWezjRj'}, (err, items) => {
         const { accessToken, itemId } = items
         const startDate = moment()
             .subtract(60, "days")
@@ -118,18 +120,18 @@ router.get('/transactions', verify, (req, res) => {
             (error, transactionResponse) => {
                 if(!error){
                     const {transactions, total_transactions} = transactionResponse 
-                    Transactions.countDocuments({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': itemId}, (err, total) => {
+                    Transactions.countDocuments({'userId': id, 'itemId': itemId}, (err, total) => {
                             if(total !== total_transactions){
                                 // Not all transactions are in the database, therefore it will be sent from Plaid API
                                 res.json(transactionResponse)
                                 transactions.map(transaction => 
-                                    Transactions.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'transactionId': transaction.transaction_id},
+                                    Transactions.findOne({'userId': id, 'transactionId': transaction.transaction_id},
                                         (err, trans) => {
                                             const {account_id, account_owner, amount, authorized_date, category, category_id, date, iso_currency_code, location, name, payment_channel, pending, transaction_id, transaction_type} = transaction
                                             if(!trans){
                                                 //console.log(transaction)
                                                  new Transactions({
-                                                    userId: '5e62dcfeadbd5109fecf0ddb',
+                                                    userId: id,
                                                     itemId: itemId,
                                                     accountId: account_id,
                                                     accountOwner: account_owner,
@@ -158,7 +160,7 @@ router.get('/transactions', verify, (req, res) => {
                             }else{
                                 // Retreive transactions database
                                 console.log('all transactions in database')
-                                Transactions.find({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': itemId}, (err, transaction) => {
+                                Transactions.find({'userId': id, 'itemId': itemId}, (err, transaction) => {
                                    res.json({ transactions: transaction })
                                 })
                             }
@@ -176,8 +178,9 @@ router.get('/transactions', verify, (req, res) => {
 // @desc    Retrieve transactions from specific account
 // @access  private
 router.get('/transactions/:accountId', verify, (req, res) => {
+    const { id } = req.user
     const { accountId } = req.params
-    Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'aV3AEryXm3FDRXxazdLKtz4kw4e66Du7Djgvn'}, (err, items) => {
+    Items.findOne({'userId': id, 'itemId': 'vwRApr3ZqasKqVdjxrNQFbn3R8B9BatWezjRj'}, (err, items) => {
         const { accessToken, itemId } = items
         const startDate = moment()
             .subtract(60, "days")
@@ -196,17 +199,17 @@ router.get('/transactions/:accountId', verify, (req, res) => {
             (error, transactionResponse) => {
                 if(!error){
                     const {transactions, total_transactions} = transactionResponse 
-                    Transactions.countDocuments({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': itemId, 'accountId': accountId}, (err, total) => {
+                    Transactions.countDocuments({'userId': id, 'itemId': itemId, 'accountId': accountId}, (err, total) => {
                             if(total !== total_transactions){
                                 // Not all transactions are in the database, therefore it will be sent from Plaid API
                                 res.json(transactionResponse)
                                 transactions.map(transaction => 
-                                    Transactions.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'transactionId': transaction.transaction_id},
+                                    Transactions.findOne({'userId': id, 'transactionId': transaction.transaction_id},
                                         (err, trans) => {
                                             const {account_id, account_owner, amount, authorized_date, category, category_id, date, iso_currency_code, location, name, payment_channel, pending, transaction_id, transaction_type} = transaction
                                             if(!trans){
                                                  new Transactions({
-                                                    userId: '5e62dcfeadbd5109fecf0ddb',
+                                                    userId: id,
                                                     itemId: itemId,
                                                     accountId: account_id,
                                                     accountOwner: account_owner,
@@ -234,7 +237,7 @@ router.get('/transactions/:accountId', verify, (req, res) => {
                                 )
                             }else{
                                 // Retreive transactions database from a certain account
-                                Transactions.find({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': itemId, 'accountId': accountId}, (err, transaction) => {
+                                Transactions.find({'userId': id, 'itemId': itemId, 'accountId': accountId}, (err, transaction) => {
                                    res.json({ transactions: transaction})
                                 })
                             }
@@ -253,7 +256,7 @@ router.get('/transactions/:accountId', verify, (req, res) => {
 router.get('/transaction/:id', verify, async (req, res) => {
     const { id } = req.params
     try{
-        const transaction = await Transactions.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'transactionId': id})
+        const transaction = await Transactions.findOne({'userId': req.user.id, 'transactionId': id})
             .then(transaction => res.json({ transaction: transaction }))
     }catch(err){
         console.log(err)
@@ -267,7 +270,7 @@ router.get('/transaction/:id', verify, async (req, res) => {
 router.get('/item/:id', verify, async (req, res) => {
     const { id } = req.params
     try{
-        const item = await Items.findOne({ 'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': id})
+        const item = await Items.findOne({ 'userId': req.user.id, 'itemId': id})
             .then(item => res.json({ item: item}))
     }catch(err){
         console.log(err)
@@ -280,18 +283,18 @@ router.get('/item/:id', verify, async (req, res) => {
 router.get('/account/:id', verify, async(req, res) => {
     const { id } = req.params
     try{
-        Items.findOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'itemId': 'epnnZE9xbKcXZVkLALLvU4vdpPEQp3tLNnn4z'}, async (err, item) => {
+        Items.findOne({'userId': req.user.id, 'itemId': 'vwRApr3ZqasKqVdjxrNQFbn3R8B9BatWezjRj'}, async (err, item) => {
             const { accessToken } = item
             client.getBalance(accessToken, {account_ids: [id]}, async (err, result) => {
                 const { balances } = result.accounts[0]
-                const account = await Accounts.findOne({ 'userId': '5e62dcfeadbd5109fecf0ddb', 'accountId': id})
+                const account = await Accounts.findOne({ 'userId': req.user.id, 'accountId': id})
                     .then(account => {
                         if(balances.current === account.balances.current && 
                             balances.available === account.balances.available){
                             res.json({ account: account})
                         }else{
                             res.json({ account: result.accounts[0]})
-                            Accounts.updateOne({'userId': '5e62dcfeadbd5109fecf0ddb', 'accountId': id}, {$set: {
+                            Accounts.updateOne({'userId': req.user.id, 'accountId': id}, {$set: {
                                 balances: {
                                     available: balances.available,
                                     current: balances.current
