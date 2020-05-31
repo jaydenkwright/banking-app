@@ -180,7 +180,7 @@ router.get('/transactions', verify, (req, res) => {
 router.get('/transactions/:accountId', verify, (req, res) => {
     const { id } = req.user
     const { accountId } = req.params
-    Items.findOne({'userId': id, 'itemId': 'vwRApr3ZqasKqVdjxrNQFbn3R8B9BatWezjRj'}, (err, items) => {
+    Items.findOne({'userId': id}, (err, items) => {
         const { accessToken, itemId } = items
         const startDate = moment()
             .subtract(60, "days")
@@ -270,7 +270,7 @@ router.get('/transaction/:id', verify, async (req, res) => {
 router.get('/item/:id', verify, async (req, res) => {
     const { id } = req.params
     try{
-        const item = await Items.findOne({ 'userId': req.user.id, 'itemId': id})
+        const item = await Items.findOne({ 'userId': req.user.id})
             .then(item => res.json({ item: item}))
     }catch(err){
         console.log(err)
@@ -283,7 +283,7 @@ router.get('/item/:id', verify, async (req, res) => {
 router.get('/account/:id', verify, async(req, res) => {
     const { id } = req.params
     try{
-        Items.findOne({'userId': req.user.id, 'itemId': 'vwRApr3ZqasKqVdjxrNQFbn3R8B9BatWezjRj'}, async (err, item) => {
+        Items.findOne({'userId': req.user.id}, async (err, item) => {
             const { accessToken } = item
             client.getBalance(accessToken, {account_ids: [id]}, async (err, result) => {
                 const { balances } = result.accounts[0]

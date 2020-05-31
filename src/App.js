@@ -4,8 +4,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link, 
-  Redirect
 } from "react-router-dom";
 import AccountLink from './components/AccountLink'
 import Sidebar from './components/Sidebar'
@@ -15,6 +13,8 @@ import TransactionDashboard from './components/TransactionDashboard'
 import Register from './components/Register'
 import Login from './components/Login'
 import Logout from './components/Logout'
+import Home from './components/Home'
+import Loading from './components/Loading'
 import axios from 'axios'
 
 function App() {
@@ -25,14 +25,11 @@ function App() {
       const res = await axios.get('/auth/user', {
         'withCredentials': true
       })
-      console.log(res.data)
       setIsLoggedIn(true)
     }catch(err){
-      console.log(err.response.status)
       setIsLoggedIn(false)
     }
   }
-  console.log(isLoggedIn)
   useEffect(() => {
     getCurrentUser()
   }, [])
@@ -67,8 +64,8 @@ function App() {
     : isLoggedIn === false ?
     <Router>
       <Switch>
-      <Route path="/">
-          <Login setIsLoggedIn={setIsLoggedIn}/>
+      <Route exact path="/">
+          <Home />
         </Route> 
       <Route path="/register">
           <Register />
@@ -78,7 +75,7 @@ function App() {
         </Route>
       </Switch>
     </Router>
-    : 'loading'}
+    : <Loading />}
     </div>
   );
 }

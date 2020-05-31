@@ -96,6 +96,7 @@ router.post('/logout', async(req, res) => {
 router.get('/user', verify, async (req, res) => {
     try{
         const { id } = req.user
+        console.log(id)
         const users = await Users.findOne({'_id': id})
         .then(user => res.json({ user: user }))
     }catch(err){
