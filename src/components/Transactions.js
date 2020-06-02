@@ -18,7 +18,6 @@ export default function Transactions() {
         )
         setTransactions(res.data.transactions)
         setLoaded(true)
-        console.log(res.data.transactions)
     }
 
     useEffect(() => {
@@ -34,8 +33,8 @@ export default function Transactions() {
             {loaded ? 
                 <div>
                     {
-                        transactions.map(({amount, category, date, transaction_id, name}) => 
-                            <div className={styles.transaction} id="transactions">
+                        transactions.map(({amount, category, date, transaction_id, name}, index) => 
+                            <div key={index} className={styles.transaction} id="transactions">
                                 <div className={styles.row}>
                                     <div className={styles.transactionTitle}>
                                         <Link className={styles.link} to={`/transaction/${transaction_id}`}>{shortenString(name, 19)}</Link>

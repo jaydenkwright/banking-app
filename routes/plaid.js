@@ -310,6 +310,16 @@ router.get('/account/:id', verify, async(req, res) => {
     }
 })
 
+router.get('/accounts', verify, async (req, res) => {
+    try{
+        const { id } = req.user 
+        const accounts = await Accounts.find({ userId: id})
+            .then(accounts => res.json({ accounts: accounts }))
+    }catch(err){
+        res.json({ error: err})
+    }
+})
+
 
 module.exports = router;
 
