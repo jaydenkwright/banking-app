@@ -2,7 +2,7 @@
     margin-top: 1em;
     border-Radius: 10px;
     width: 35vw;
-    height: 7em;
+    min-height: 7em;
     background-image: linear-gradient(to right, #b1bdcf, #E0E5EC);
     box-Shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px #cad5e1;
     animation: fadeIn 1.5s ease;
@@ -26,7 +26,25 @@
     animation: fadeIn 1.5s ease;
 }
 
+.link{
+    text-decoration: none;
+    color: #202e56;
+}
 
+.link:hover{
+    text-decoration: none;
+    color: #202e56;
+}
+
+.link:visited{
+    text-decoration: none;
+    color: #202e56;
+}
+
+.link:active{
+    text-decoration: none;
+    color: #202e56;
+}
 
 @keyframes fadeIn {
     0%{
@@ -39,7 +57,7 @@
 @media screen and (max-width: 1024px){
     .account{
         width: 85vw;
+        margin-left: auto;
+        margin-right: auto;
     }
-
-
 }
