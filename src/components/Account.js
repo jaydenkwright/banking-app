@@ -30,18 +30,26 @@ export default function Account() {
                     <div className={styles.accountSubtitle}>
                         {officialName} 
                     </div>
-                    <div className={styles.balanceAvailable}>
-                        ${balances?.available}
+                    {balances?.available ? 
+                        <div>
+                            <div className={styles.balanceAvailable}>
+                                ${balances?.available}
+                            </div> 
+                            <div className={styles.balanceAvailableText}>
+                                Available
+                            </div>
+                        </div>
+                    : null } 
+                    {balances?.current ?
+                    <div>
+                        <div className={styles.balanceCurrent}>
+                            ${balances?.current}
+                        </div>
+                        <div className={styles.balanceCurrentText}>
+                            Current
+                        </div>
                     </div>
-                    <div className={styles.balanceAvailableText}>
-                        Available
-                    </div>
-                    <div className={styles.balanceCurrent}>
-                        ${balances?.current}
-                    </div>
-                    <div className={styles.balanceCurrentText}>
-                        Current
-                    </div>
+                    : null}
                 </div>
             : null }
         </div>
