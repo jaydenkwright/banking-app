@@ -30,7 +30,7 @@ export default function Accounts() {
                 <div>
                     {
                         accounts.map(({name, officialName, accountId, type}, i) => 
-                            <div key={i} className={styles.account}>
+                            <div key={i} className={styles.account} id='accounts'>
                                 <div className={styles.accountTitle}>
                                     <Link className={styles.link} to={`/account/${accountId}`}>{name}</Link>
                                 </div>

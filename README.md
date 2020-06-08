@@ -1,6 +1,15 @@
 ## Overview
 
-Budgeting app built with ReactJS, NodeJs, Express, and Mongoose. This application uses Plaid API to allow users to link bank accounts from various institutions to view and analyze transaction data. 
+A banking dashboard app that uses Plaid API to allow users to link bank accounts from various institutions to view and analyze transaction data. 
+
+## Built With
+
+* [React](https://reactjs.org/)
+* [Express](https://expressjs.com/)
+* [Node.js](https://nodejs.org/en/)
+* [Mongoose](https://mongoosejs.com/)
+* [Chart.js](https://www.chartjs.org/)
+* [Plaid API](https://plaid.com/docs/)
 
 ## Usage
 

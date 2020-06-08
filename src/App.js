@@ -35,7 +35,7 @@ function App() {
   }, [])
 
   return (
-    <div>
+    <div id='App'>
     {isLoggedIn === true ? 
     <Router>
       <Sidebar />
