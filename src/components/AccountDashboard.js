@@ -11,7 +11,9 @@ export default function AccountDashboard() {
         <div>
             <Welcome />
             <Account/>
-            <Transactions/>
+            <div className={styles.transactions}>
+                <Transactions/>
+            </div>
         </div>
     )
 }

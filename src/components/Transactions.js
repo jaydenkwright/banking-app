@@ -27,9 +27,6 @@ export default function Transactions() {
 
     return (
         <div>
-            <div className={styles.titles}>
-                Transactions
-            </div>
             {loaded ? 
                 <div>
                     {

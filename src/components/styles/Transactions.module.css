@@ -1,5 +1,7 @@
 .transaction{
     margin-top: 1em;
+    margin-left: auto;
+    margin-right: auto;
     border-Radius: 10px;
     width: 35vw;
     min-height: 5.5em;

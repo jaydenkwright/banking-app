@@ -14,8 +14,6 @@ const client = new plaid.Client(
     plaid.environments[process.env.PLAID_ENV],
     { version: "2019-05-29", clientApp: "Plaid Quickstart" }
 );
-// 5ea6245e1d0a926f67a158db
-// 5e62dcfeadbd5109fecf0ddb
 
 // @route   POST /plaid/link
 // @desc    Exchange public token with with Plaid API to retrieve ACCESS_TOKEN

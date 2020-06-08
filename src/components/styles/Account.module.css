@@ -1,9 +1,7 @@
 .account{
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 1em;
+    margin: 1em auto 3em auto;
     border-Radius: 10px;
-    width: 50vw;
+    width: 35vw;
     height: 17em;
     background-image: linear-gradient(to right, #b1bdcf, #E0E5EC);
     box-Shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px #cad5e1;
