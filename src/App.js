@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Loading from './components/Loading'
 import axios from 'axios'
+import ErrorBoundary from './components/ErrorBoundary'
 const Home = lazy(() => import('./components/Home'))
 const Logout = lazy(() => import('./components/Logout'))
 const Login = lazy(() => import('./components/Login'))
@@ -35,50 +36,52 @@ function App() {
   }, [])
 
   return (
-    <Suspense fallback={<Loading />}>
-      <div id='App'>
-        {isLoggedIn === true ? 
-        <Router>
-          <Sidebar />
-          <div className="main">
-            <div className="dashboards">
-              <Switch>
-                <Route path="/" exact>
-                  <Dashboard/>
-                </Route>
-                <Route path="/account/:id">
-                  <AccountDashboard/>
-                </Route>
-                <Route path="/transaction/:id">
-                  <TransactionDashboard/>
-                </Route>
-                <Route path="/link">
-                  <AccountLink />
-                </Route>
-                <Route path="/logout">
-                  <Logout setIsLoggedIn={setIsLoggedIn}/>
-                </Route>
-              </Switch>
+    <ErrorBoundary>
+      <Suspense fallback={<Loading />}>
+        <div id='App'>
+          {isLoggedIn === true ? 
+          <Router>
+            <Sidebar />
+            <div className="main">
+              <div className="dashboards">
+                <Switch>
+                  <Route path="/" exact>
+                    <Dashboard/>
+                  </Route>
+                  <Route path="/account/:id">
+                    <AccountDashboard/>
+                  </Route>
+                  <Route path="/transaction/:id">
+                    <TransactionDashboard/>
+                  </Route>
+                  <Route path="/link">
+                    <AccountLink />
+                  </Route>
+                  <Route path="/logout">
+                    <Logout setIsLoggedIn={setIsLoggedIn}/>
+                  </Route>
+                </Switch>
+              </div>
             </div>
-          </div>
-        </Router>
-        : isLoggedIn === false ?
-        <Router>
-          <Switch>
-          <Route exact path="/">
-              <Home />
-            </Route> 
-          <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/login">
-              <Login setIsLoggedIn={setIsLoggedIn}/>
-            </Route>
-          </Switch>
-        </Router>
-        : <Loading />}
-      </div>
-    </Suspense>
+          </Router>
+          : isLoggedIn === false ?
+          <Router>
+            <Switch>
+            <Route exact path="/">
+                <Home />
+              </Route> 
+            <Route path="/register">
+                <Register />
+              </Route>
+              <Route path="/login">
+                <Login setIsLoggedIn={setIsLoggedIn}/>
+              </Route>
+            </Switch>
+          </Router>
+          : <Loading />}
+        </div>
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 
