@@ -19,7 +19,7 @@ export default function Transaction() {
 
     useEffect(() => {
         getTransaction()
-    }, [])
+    })
 
     const { name, amount } = transactionData
     return (

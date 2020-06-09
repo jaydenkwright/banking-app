@@ -4,7 +4,7 @@
     font-weight: 700;
     text-align: left;
     margin-top: .3em;
-    animation: fadeIn 1s ease;
+    animation: fadeIn .5s ease;
 }
 
 .link{

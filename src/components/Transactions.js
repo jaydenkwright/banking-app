@@ -22,7 +22,7 @@ export default function Transactions() {
 
     useEffect(() => {
         getTransactions()
-    }, [])
+    })
 
 
     return (

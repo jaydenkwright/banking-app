@@ -4,14 +4,12 @@ import styles from './styles/Chart.module.css'
 import { Bar } from 'react-chartjs-2'
 
 export default function Chart() {
-    const [transactionData, setTransactionData] = useState([])
     const [labels, setLabels] = useState([])
     const [values, setValues] = useState([])
     const [loaded, setLoaded] = useState(false)
     const getChartData = async () => {
         const res = await axios('/plaid/transactions')
         const  { transactions } = res.data
-        setTransactionData(transactions)
         setLoaded(true)
         const label = transactions.slice(0, 5).map((transaction) => {
             return transaction.name;

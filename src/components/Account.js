@@ -18,7 +18,7 @@ export default function Account() {
     }
     useEffect(() => {
         getAccount()
-    }, [])
+    })
     const {name, officialName, balances} = account
     return (
         <div>

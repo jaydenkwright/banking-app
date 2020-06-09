@@ -5,7 +5,7 @@
     text-align: left;
     margin-top: .3em;
     margin-left: 1em;
-    animation: fadeIn 1s ease;
+    animation: fadeIn .5s ease;
 }
 
 @keyframes fadeIn {

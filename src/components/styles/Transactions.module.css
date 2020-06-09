@@ -7,7 +7,7 @@
     min-height: 5.5em;
     background-image: linear-gradient( #ecf0f4, #E0E5EC);
     box-Shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px    rgba(255,255,255, 0.5);
-    animation: fadeIn 1s ease;
+    animation: fadeIn .5s ease;
 }
 
 .title{

@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Account from './Account'
 import Transactions from './Transactions'
-import Item from './Item'
-import Chart from './Chart'
 import Welcome from './Welcome'
 import styles from './styles/AccountDashboard.module.css'
 
