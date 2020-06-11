@@ -1,0 +1,25 @@
+.title{
+    font-size: 5em;
+    margin: 1em auto auto auto;
+    text-align: center;
+    color: #192443;
+    animation: fadeIn 1s ease;
+}
+
+.image{
+    margin: auto;
+    text-align: center;
+    animation: fadeIn 1.5s ease;
+}
+
+.test{
+    width: 1em;
+}
+
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }100%{
+        opacity: 1;
+    }
+}

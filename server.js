@@ -23,9 +23,9 @@ mongoose.connect(process.env.DB, { useNewUrlParser: true, useCreateIndex: true, 
 
 app.use('/plaid/', plaid)
 app.use('/auth/', auth)
-app.get('/server-worker.js', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'build', 'service-worker.js'))
-})
+// app.get('/server-worker.js', (req, res) => {
+//     res.sendFile(path.resolve(__dirname, '..', 'build', 'service-worker.js'))
+// })
 
 const port = process.env.PORT || 5000
 

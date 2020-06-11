@@ -1,13 +1,6 @@
-import React from 'react'
-import styles from './styles/Home.module.css'
-
-export default function Home() {
-    return (
-        <div>
-            <div className={styles.image}>
-            <svg width="50vw" height="30vw" viewBox="0 0 1138 742" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="1138" height="742" viewBox="0 0 1138 742" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="undraw_financial_data_es63 1">
-<path className={styles.test} d="M570.18 741C843.66 741 1065.36 726.225 1065.36 708C1065.36 689.775 843.66 675 570.18 675C296.7 675 75 689.775 75 708C75 726.225 296.7 741 570.18 741Z" fill="#F2F2F2"/>
+<path id="bottom" d="M570.18 741C843.66 741 1065.36 726.225 1065.36 708C1065.36 689.775 843.66 675 570.18 675C296.7 675 75 689.775 75 708C75 726.225 296.7 741 570.18 741Z" fill="#F2F2F2"/>
 <path id="Vector" d="M659.38 709.16L481.19 706.88L481.71 702.31L490.33 626.92H646.82L658.33 702.31L659.21 708.02L659.38 709.16Z" fill="#2F2E41"/>
 <path id="Vector_2" opacity="0.1" d="M659.21 708.02H570.28L481.19 706.88L481.71 702.31H658.33L659.21 708.02Z" fill="black"/>
 <path id="Vector_3" d="M687.94 703.45H451.49V709.16H687.94V703.45Z" fill="#3F3D56"/>
@@ -89,12 +82,3 @@ export default function Home() {
 <path id="Vector_69" opacity="0.3" d="M808.93 507.84C811.691 507.84 813.93 505.601 813.93 502.84C813.93 500.079 811.691 497.84 808.93 497.84C806.169 497.84 803.93 500.079 803.93 502.84C803.93 505.601 806.169 507.84 808.93 507.84Z" fill="#BAC8D8"/>
 </g>
 </svg>
-
-
-            </div>
-            <div className={styles.title}>
-                Simple Banking Dashboard
-            </div>
-        </div>
-    )
-}
